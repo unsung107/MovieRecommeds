@@ -67,3 +67,4 @@ class Director(models.Model):
 class CommingMovie(models.Model):
     title = models.CharField(max_length=100)
     openDt = models.DateField()
+    post_url = models.TextField()
