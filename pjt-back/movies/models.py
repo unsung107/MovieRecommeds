@@ -13,6 +13,7 @@ class Movie(models.Model):
     discription = models.TextField()
     audience = models.IntegerField()
     watch_grade = models.IntegerField()
+    watch_grade_name = models.CharField(max_length=20)
     score = models.FloatField()
 
     genres = models.ManyToManyField(Genre, related_name='movies')

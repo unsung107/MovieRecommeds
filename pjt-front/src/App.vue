@@ -1,14 +1,27 @@
 <template>
   <div id="app">
+    <button @click="movieUpdate">실험</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
+  
   name: 'app',
   components: {
+  },
+  methods: {
+    movieUpdate() {
+      axios.get('http://127.0.0.1:8000/movies/movieupdate/')
+      .then(response => {
+        console.log(response)
+      })
+      
+    }
   }
+
 }
 </script>
 
