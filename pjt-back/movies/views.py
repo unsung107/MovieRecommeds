@@ -10,6 +10,49 @@ import datetime
 import bs4
 
 
+
+def commingmovieupdate(request):
+    URL = config('COMMING_MOVIE_URL')
+    
+    html = requests.get(URL).text
+    comming_dates = bs4.BeautifulSoup(html, 'html.parser')
+    comming_dates = comming_dates.select('.lst_wrap')
+    today = datetime.date.today()
+
+    for comming_date in comming_dates:
+        comming_movies = comming_date.select('li')
+        
+        for comming_movie in comming_movies:
+            post_url = 'img/base_poster.jpg'
+            img_tag = comming_movie.select_one('img')
+            for string in str(img_tag).split():
+                if string[:3] == 'src':
+                    post_url = string.split('jpg')[0][5:] + 'jpg'
+            
+            openDt = ''.join(comming_movie.select_one('.lst_dsc .info_txt1 dd').text.split()[-2].split('.'))
+            title = comming_movie.select_one('.tit').a.text
+            
+            openDt = int(openDt)
+            if openDt < 10000000:
+                openDt *= 100
+                openDt += 28
+            openDt = datetime.date(openDt // 10000, openDt // 100 % 100, openDt % 100)
+            print(openDt, title)
+            temp_comming_movie = CommingMovie()
+            temp_comming_movie.title = title
+            temp_comming_movie.openDt = openDt
+            temp_comming_movie.post_url = post_url
+            try:
+                temp_comming_movie.save()
+            except:
+                continue
+                
+
+
+        
+    return JsonResponse({'commingMovies': CommingMovie.objects.all().count()})
+
+
 # @require_POST
 def movieupdate(request):
     

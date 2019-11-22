@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     movieUpdate() {
-      axios.get('http://127.0.0.1:8000/movies/movieupdate/')
+      axios.get('http://127.0.0.1:8000/movies/commingmovieupdate/')
       .then(response => {
         console.log(response)
       })
