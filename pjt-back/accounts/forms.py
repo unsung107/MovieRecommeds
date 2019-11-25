@@ -5,5 +5,5 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'age']
+        fields = ['username', 'birthday', 'age']
     

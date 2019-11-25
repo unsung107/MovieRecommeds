@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '@/views/Login'
 import Signup from '@/views/Signup'
+import MovieDetail from '@/views/MovieDetail'
+import ActorDetail from '@/views/ActorDetail'
 
 Vue.use(VueRouter)
 
@@ -21,6 +23,16 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: Signup
+  },
+  {
+    path: '/movie/:movie_id',
+    name: 'movieDetail',
+    component: MovieDetail
+  },
+  {
+    path: '/actor/:actor_id',
+    name: 'actorDetail',
+    component: ActorDetail
   },
 ]
 

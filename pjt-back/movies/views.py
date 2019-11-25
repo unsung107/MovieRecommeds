@@ -1,5 +1,5 @@
 from .models import Movie, Review, Recommend, Actor, Director, CommingMovie, Genre, RecommendReview, MovieComment
-from .serializers import MovieSerializer, GenreSerializer
+from .serializers import MovieSerializer, GenreSerializer, ActorSerializer
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST, require_GET
 from django.contrib.auth.decorators import login_required
@@ -133,7 +133,9 @@ def movieupdate(request):
                     continue
                 movie_link = movie_naver_detail['items'][0]['link'].replace('basic', 'detail')
                 print(movieNm)
+                post_url = '../assets/base_poster.jpg'
                 post_url = movie_naver_detail['items'][0]['image']
+                
                 userRating = movie_naver_detail['items'][0]['userRating']
 
                 discription_html = requests.get(movie_naver_detail['items'][0]['link']).text
@@ -152,7 +154,7 @@ def movieupdate(request):
 
                 for person in actors + directors:
                     peopleNm = person['peopleNm']
-                    img_url = 'img/person_base.jpg'
+                    img_url = '../assets/base_person.jpg'
 
                     if naver_movie:
                         img_tag = naver_movie.select_one(f'img[alt="{peopleNm}"]')
@@ -228,7 +230,6 @@ def homemovielist(request, genre_id):
     
     genre = get_object_or_404(Genre, pk=genre_id)
     serializer = GenreSerializer(instance=genre)
-    pprint(serializer.data)
     return JsonResponse(serializer.data)
 
 def searchMovie(request, movie_nm):
@@ -240,3 +241,24 @@ def searchMovie(request, movie_nm):
     serializer = MovieSerializer(instance=movies, many=True)
 
     return JsonResponse({'movies': serializer.data})
+
+def giveMovieInfo(request, movie_id):
+    
+    movie = get_object_or_404(Movie, pk=movie_id)
+    serializer = MovieSerializer(instance=movie)
+    return JsonResponse(serializer.data)
+
+def giveActorInfo(request, actor_id):
+    
+    actor = get_object_or_404(Actor, pk=actor_id)
+    serializer = ActorSerializer(instance=actor)
+    movie_list = []
+    for movie_id in serializer.data['movies']:
+        movie = get_object_or_404(Movie, pk=movie_id)
+        movie_serializer = MovieSerializer(instance=movie)
+        movie_list.append(movie_serializer.data)
+    # print('list', movie_list)
+    result = serializer.data
+    result['movies'] = movie_list
+    print(result)
+    return JsonResponse(result)
