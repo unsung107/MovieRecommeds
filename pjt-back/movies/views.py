@@ -1,8 +1,10 @@
 from .models import Movie, Review, Recommend, Actor, Director, CommingMovie, Genre, RecommendReview, MovieComment
+from .serializers import MovieSerializer, GenreSerializer
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST, require_GET
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
+from rest_framework.response import Response
 from pprint import pprint
 from decouple import config
 import requests
@@ -222,3 +224,19 @@ def movieupdate(request):
     }
     return JsonResponse(context)
 
+def homemovielist(request, genre_id):
+    
+    genre = get_object_or_404(Genre, pk=genre_id)
+    serializer = GenreSerializer(instance=genre)
+    pprint(serializer.data)
+    return JsonResponse(serializer.data)
+
+def searchMovie(request, movie_nm):
+    if movie_nm == ' ':
+        return JsonResponse({'movies': []})
+    
+    movies = Movie.objects.filter(title__icontains=movie_nm)
+    
+    serializer = MovieSerializer(instance=movies, many=True)
+
+    return JsonResponse({'movies': serializer.data})
