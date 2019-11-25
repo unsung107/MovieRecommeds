@@ -1,14 +1,28 @@
 <template>
   <div class="container">
     <img class="movie--poster my-3" :src="movie.post_url" alt />
+    
+
     <div class="row">
-    <span class="card col-3 my-3" v-for="actor in movie.actors" :key="actor.id">
-      <router-link :to="`/actor/${actor.id}`">
-        <img :src="actor.image_url" :alt="actor.name" :key="actor.id" class="movie--poster rounded-circle" /><br>
-        {{ actor.name }}
-      </router-link>
-    </span>
+      <span class="card col-3 my-3" v-for="director in movie.directors" :key="director.id">
+        감독
+        <router-link :to="`/director/${director.id}`">
+        <br>
+          <img :src="director.image_url" :alt="director.name" :key="director.id" class="movie--poster rounded-circle" /><br>
+
+          {{ director.name }}
+          
+        </router-link>
+      </span>
+      <span class="card col-3 my-3" v-for="actor in movie.actors" :key="actor.id">
+        배우
+        <router-link :to="`/actor/${actor.id}`">
+          <img :src="actor.image_url" :alt="actor.name" :key="actor.id" class="movie--poster rounded-circle" /><br>
+          {{ actor.name }}
+        </router-link>
+      </span>
     </div>
+
   </div>
 </template>
 

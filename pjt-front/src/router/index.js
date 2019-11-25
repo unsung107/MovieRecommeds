@@ -5,7 +5,9 @@ import Login from '@/views/Login'
 import Signup from '@/views/Signup'
 import MovieDetail from '@/views/MovieDetail'
 import ActorDetail from '@/views/ActorDetail'
-
+import AdminPage from '@/views/AdminPage'
+import DirectorDetail from '@/views/DirectorDetail'
+import CreateRecommend from '@/views/CreateRecommend'
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,6 +36,22 @@ const routes = [
     name: 'actorDetail',
     component: ActorDetail
   },
+  {
+    path: '/director/:director_id',
+    name: 'directorDetail',
+    component: DirectorDetail
+  },
+  {
+    path: '/createRecommend',
+    name: 'createRecommend',
+    component: CreateRecommend
+  },
+  {
+    path: '/adminPage',
+    name: 'adminPage',
+    component: AdminPage
+  },
+
 ]
 
 const router = new VueRouter({
