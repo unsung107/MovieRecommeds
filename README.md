@@ -32,6 +32,7 @@ $ pip install djangorestframework-jwt
 $ npm init
 $ npm install
 $ npm install axios
+$ npm install --save date
 ```
 
 
