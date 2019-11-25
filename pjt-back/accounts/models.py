@@ -8,6 +8,7 @@ User = settings.AUTH_USER_MODEL
 class User(AbstractUser):
     
     age = models.IntegerField(null=True)
+    birthday = models.DateField(default="1993-06-16")
 
     like_movies = models.ManyToManyField(Movie, related_name="liked_users")
     like_genres = models.ManyToManyField(Genre, related_name="liked_users")

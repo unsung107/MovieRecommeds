@@ -1,20 +1,28 @@
 <template>
-  <div class="home">
+  <div class="container">
     <button @click="getMovie(1)">범죄</button>
     <button @click="getMovie(2)">드라마</button>
     <button @click="getMovie(3)">액션</button>
     <button @click="getMovie(5)">SF</button>
     <button @click="getMovie(11)">판타지</button>
-    <br>
+    <br />
 
-    <input type="text" v-model="searchKey" @input="searching(searchKey)">
-    
-    <div v-for="movie in movieList" :key="movie.id">{{movie.title}}</div>
+    <input type="text" v-model="searchKey" @input="searching(searchKey)" />
+
+    <div class="row">
+      <span class="card col-3 my-3" v-for="movie in movies" :key="movie.id">
+        <router-link :to="`/movie/${movie.id}`">
+          <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
+        </router-link>
+        {{ movie.title }}
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+// import MovieDetail from "@/components/MovieDetail.vue";
 // @ is an alias to /src
 
 export default {
@@ -22,19 +30,19 @@ export default {
   data() {
     return {
       movies: [],
-      searchKey: '',
+      searchKey: ""
     };
   },
-  components: {},
+  components: {
+    // MovieDetail
+  },
   methods: {
     getMovie(genre_id) {
       const SERVER_IP = process.env.VUE_APP_SERVER_IP;
       axios
         .get(SERVER_IP + `/movies/api/v1/${genre_id}/`)
         .then(response => {
-          console.log(response.data);
-          this.movies = response.data.movies
-          console.log(this.movies)
+          this.movies = response.data.movies;
         })
         .catch(error => {
           console.error(error);
@@ -43,31 +51,27 @@ export default {
 
     searching(movie_nm) {
       if (!movie_nm) {
-        movie_nm = ' '
+        movie_nm = " ";
       }
       const SERVER_IP = process.env.VUE_APP_SERVER_IP;
       axios
         .get(SERVER_IP + `/movies/api/v1/searchNm/${movie_nm}/`)
         .then(response => {
-          this.movies = response.data.movies
-          
+          this.movies = response.data.movies;
         })
         .catch(error => {
           console.error(error);
         });
     }
   },
-  mounted() {
-    
-  },
+  mounted() {},
   computed: {
     movieList() {
-      return this.movies
+      return this.movies;
     }
   }
 };
 </script>
 
 <style>
-
 </style>
