@@ -35,7 +35,7 @@ def commingmovieupdate(request):
             openDt = int(openDt)
             if openDt < 10000000:
                 openDt *= 100
-                openDt += 28
+                openDt += 1
             openDt = datetime.date(openDt // 10000, openDt // 100 % 100, openDt % 100)
             print(openDt, title)
             temp_comming_movie = CommingMovie()
