@@ -25,12 +25,13 @@ $ pip install python-decouple
 $ pip install request
 $ pip install bs4
 $ pip install requests
+$ pip install django-cors-headers
 
 # Vue
+$ npm init
+$ npm install
 $ npm install axios
-
 ```
-
 
 
 #### 11월 22일(금)
