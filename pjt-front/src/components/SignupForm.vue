@@ -1,28 +1,15 @@
 <template>
   <div>
     <h1>Signup Form</h1>
-    
-    <input type="text" v-model="credentials.id">
-    <input type="password" v-model="credentials.password1">
-    <input type="password" v-model="credentials.password2">
-    <input type="number" v-model="credentials.age">
+    <div>Enter your id</div>
+    <input type="text" v-model="credentials.id"><br><br>
+    <div>Enter your password</div>
+    <input type="password" v-model="credentials.password1"><br><br>
+    <div>Enter your password again</div>
+    <input type="password" v-model="credentials.password2"><br><br>
+    <div>Enter your birthday</div>
+    <input type="date" v-model="credentials.birthday"><br><br>
     <button @click="signup">제출</button>
-    
-    <!-- <form @submit.prevent="signup">
-      <b-form-group label="Enter your id">
-        <b-form-input type="text" v-model="id" aria-placeholder="아이디를 입력하세요"></b-form-input>
-      </b-form-group>
-
-      <b-form-group label="Enter your password">
-        <b-form-input type="password" v-model="password" aria-placeholder="비밀번호를 입력하세요"></b-form-input>
-      </b-form-group>
-
-      <b-form-group label="Enter your birthday">
-        <b-form-input type="date" v-model="birthday" aria-placeholder="생년월일을 입력하세요"></b-form-input>
-      </b-form-group>
-
-      <b-button size="lg" variant="success" type="submit">Signup</b-button>
-    </form> -->
   </div>
 </template>
 
@@ -37,7 +24,7 @@
           username: '',
           password1: '',
           password2: '',
-          age:0,
+          birthday: 0,
         },
       loading: false,
       errors: [],
@@ -48,13 +35,16 @@
         const id = this.credentials.id
         const password1 = this.credentials.password1
         const password2 = this.credentials.password2
-        const age = this.credentials.age
+        const birthday = this.credentials.birthday
 
-        if (!id || !password1 || !password2 || !age) {
+        let born = birthday.split('-')[0]
+        console.log(born)
+
+        if (!id || !password1 || !password2 || !birthday) {
             return false
         }
 
-        axios.post('http://127.0.0.1:8000/accounts/signup/', { 'username':id, 'password1':password1,'password2':password2, 'age':age })
+        axios.post('http://127.0.0.1:8000/accounts/signup/', { 'username':id, 'password1':password1,'password2':password2, 'birthday':birthday })
             .then(res => {
               console.log(res)
                 if (res.status === 200) {
