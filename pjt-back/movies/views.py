@@ -25,7 +25,7 @@ def commingmovieupdate(request):
         comming_movies = comming_date.select('li')
         
         for comming_movie in comming_movies:
-            post_url = 'img/base_poster.jpg'
+            post_url = '../assets/base_poster.jpg'
             img_tag = comming_movie.select_one('img')
             for string in str(img_tag).split():
                 if string[:3] == 'src':
@@ -68,9 +68,9 @@ def movieupdate(request):
     NAVER_BASE_URL = config('NAVER_BASE_URL')
 
     for week_ago in range(130, 200):
+        print(week_ago)
         targetDt = datetime.date.today() - datetime.timedelta(weeks=week_ago)
         targetDt = targetDt.strftime('%Y%m%d')
-        print(targetDt)
         api_url =f'{BASE_URL}boxoffice/searchWeeklyBoxOfficeList.json?key={key}&targetDt={targetDt}'
 
         response = requests.get(api_url).json()['boxOfficeResult']['weeklyBoxOfficeList']
@@ -257,8 +257,7 @@ def giveActorInfo(request, actor_id):
         movie = get_object_or_404(Movie, pk=movie_id)
         movie_serializer = MovieSerializer(instance=movie)
         movie_list.append(movie_serializer.data)
-    # print('list', movie_list)
+
     result = serializer.data
     result['movies'] = movie_list
-    print(result)
     return JsonResponse(result)
