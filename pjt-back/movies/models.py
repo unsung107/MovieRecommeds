@@ -15,6 +15,7 @@ class Movie(models.Model):
     watch_grade = models.IntegerField()
     watch_grade_name = models.CharField(max_length=20)
     score = models.FloatField()
+    video_url = models.TextField()
 
     genres = models.ManyToManyField(Genre, related_name='movies')
     
