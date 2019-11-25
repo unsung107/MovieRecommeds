@@ -9,7 +9,7 @@
     <input type="password" v-model="credentials.password2"><br><br>
     <div>Enter your birthday</div>
     <input type="date" v-model="credentials.birthday"><br><br>
-    <a @click="signup">제출</a>
+    <button @click="signup">제출</button>
   </div>
 </template>
 
@@ -25,7 +25,7 @@
           username: '',
           password1: '',
           password2: '',
-          birthday: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+          birthday: new Date().toJSON().slice(0,10).replace(/-/g,'-'),
         },
       loading: false,
       errors: [],
