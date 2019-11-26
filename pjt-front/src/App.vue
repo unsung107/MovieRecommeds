@@ -1,15 +1,55 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> | 
-      <router-link to="/login">Login</router-link> | 
-      <router-link to="/signup">Signup</router-link>  | 
-      <router-link to="/createRecommend">추천리스트 작성</router-link>
-      <router-link to="/adminPage">관리페이지</router-link>
+      <div v-if="isLoggedIn">
+        <router-link to="/">Home</router-link> | 
+        <a @click.prevent="logout" href="/logout">Logout</a> | 
+        <router-link to="/createRecommend">추천리스트 작성</router-link> | 
+        <router-link to="/adminPage">관리페이지</router-link> | 
+      </div>
+      
+      <div v-else>
+        <router-link to="/">Home</router-link> | 
+        <router-link to="/login">Login</router-link> | 
+        <router-link to="/signup">Signup</router-link>  | 
+      </div>
+
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import router from '@/router'
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      isLoggedIn: false,
+    }
+  },
+  methods: {
+    checkLoggedIn(){
+      if(this.$session.get('jwt')) {
+        this.isLoggedIn = true
+        router.push('/')
+      }
+
+    },
+    logout() {
+      this.$session.destroy()
+      router.push('/login')
+      this.isLoggedIn = false
+    }
+  },
+
+  mounted() {
+    this.checkLoggedIn()
+    
+  },
+}
+</script>
 
 <style>
 #app {
