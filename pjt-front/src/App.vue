@@ -15,7 +15,6 @@
         <router-link to="/login" @login="checkLoggedIn">Login</router-link> | 
         <router-link to="/signup">Signup</router-link>  | 
       </div>
-
     </div>
     <router-view/>
   </div>
