@@ -53,8 +53,6 @@ class CommingMovieSerializer(serializers.ModelSerializer):
         fields = ('title', 'openDt', 'post_url', 'liked_users', )
 
 class UserSerializer(serializers.ModelSerializer):
-    recommends = RecommendSerializer(many=True)
-
     like_movies = MovieSerializer(many=True)
     like_genres = GenreSerializer(many=True)
     like_directors = DirectorSerializer(many=True)
@@ -64,4 +62,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'birthday', 'age', 'like_movies', 'like_genres', 'like_directors', 'like_actors', 'like_commingmovies', 'like_recommends', 'recommends', )
+        fields = ('username', 'birthday', 'age', 'like_movies', 'like_genres', 'like_directors', 'like_actors', 'like_commingmovies', 'like_recommends', )
