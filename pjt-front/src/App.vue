@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
+
       <div v-if="isLoggedIn">
+         | 
         <router-link to="/">Home</router-link> | 
         <a @click.prevent="logout" href="/logout">Logout</a> | 
         <router-link to="/createRecommend">추천리스트 작성</router-link> | 
@@ -10,7 +12,7 @@
       
       <div v-else>
         <router-link to="/">Home</router-link> | 
-        <router-link to="/login">Login</router-link> | 
+        <router-link to="/login" @login="checkLoggedIn">Login</router-link> | 
         <router-link to="/signup">Signup</router-link>  | 
       </div>
 
@@ -31,23 +33,24 @@ export default {
   },
   methods: {
     checkLoggedIn(){
-      if(this.$session.get('jwt')) {
+      this.$session.start()
+      if(this.$session.has('jwt')) {
         this.isLoggedIn = true
-        router.push('/')
       }
-
     },
     logout() {
       this.$session.destroy()
-      router.push('/login')
       this.isLoggedIn = false
+      router.push('/login')
+      
     }
   },
-
   mounted() {
     this.checkLoggedIn()
-    
   },
+  updated() {
+    this.checkLoggedIn()
+  }
 }
 </script>
 
