@@ -32,6 +32,7 @@
 
 <script>
 import axios from 'axios'
+import router from '@/router'
 
 export default {
   name: 'LoginForm',
@@ -53,10 +54,15 @@ export default {
 
         axios.post(SERVER_IP + '/api-token-auth/', this.credentials)
           .then(response => {
-            console.log(response)
+            this.$session.start()
+            this.$session.set('jwt', response.data.token)
+            this.loading = false
+            // console.log(response)
+            router.push('/')
           })
           .catch(error => {
             console.log(error)
+            this.loading = false
           })
       }
     },

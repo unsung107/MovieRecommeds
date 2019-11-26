@@ -11,10 +11,9 @@ from datetime import date, datetime
 @permission_classes([AllowAny])
 def signup(request):
     form = CustomUserCreationForm(data=request.data)
-    print(form.data)
     if form.is_valid():
-        print('dd')
         form.save()
-    return Response(form.data)
-    pass
+        return Response(form.data)
+    return Response(form.errors)
+    
  
