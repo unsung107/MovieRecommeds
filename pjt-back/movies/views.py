@@ -486,4 +486,69 @@ def giveUserDetail(reqeust, user_id):
     serializer = UserSerializer(instance=user)
 
     return JsonResponse(serializer.data)
-    
+
+def recommendDetail(request, recommend_id):
+    recommend = get_object_or_404(Recommend, pk=recommend_id)
+    serializer = RecommendSerializer(instance=recommend)
+
+    return JsonResponse(serializer.data)
+
+
+@api_view(['POST'])
+def likemovie(request, movie_id, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    movie = get_object_or_404(Movie, pk=movie_id)
+
+    if movie.liked_users.filter(pk=user.id).exists():
+        user.like_movies.remove(movie)
+        liked = False
+    else:
+        user.like_movies.add(movie)
+        liked = True
+    context = {'liked': liked, 'count': movie.liked_users.count()}
+    return JsonResponse(context)
+
+
+@api_view(['POST'])
+def likedirector(request, director_id, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    director = get_object_or_404(Director, pk=director_id)
+
+    if director.liked_users.filter(pk=user.id).exists():
+        user.like_directors.remove(director)
+        liked = False
+    else:
+        user.like_directors.add(director)
+        liked = True
+    context = {'liked': liked, 'count': director.liked_users.count()}
+    return JsonResponse(context)
+
+
+@api_view(['POST'])
+def likeactor(request, actor_id, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    actor = get_object_or_404(Actor, pk=actor_id)
+
+    if actor.liked_users.filter(pk=user.id).exists():
+        user.like_actors.remove(actor)
+        liked = False
+    else:
+        user.like_actors.add(actor)
+        liked = True
+    context = {'liked': liked, 'count': actor.liked_users.count()}
+    return JsonResponse(context)
+
+
+@api_view(['POST'])
+def likerecommend(request, recommend_id, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    recommend = get_object_or_404(Recommend, pk=recommend_id)
+
+    if recommend.liked_users.filter(pk=user.id).exists():
+        user.like_recommends.remove(recommend)
+        liked = False
+    else:
+        user.like_recommends.add(recommend)
+        liked = True
+    context = {'liked': liked, 'count': recommend.liked_users.count()}
+    return JsonResponse(context)

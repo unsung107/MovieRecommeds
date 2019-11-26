@@ -44,7 +44,7 @@ class RecommendSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recommend
-        fields = ('user', 'title', 'discription', 'movies', 'moviecomments', )
+        fields = ('user', 'title', 'discription', 'movies', 'moviecomments', 'id', )
 
 class CommingMovieSerializer(serializers.ModelSerializer):
     liked_users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)

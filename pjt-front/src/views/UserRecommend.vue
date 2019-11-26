@@ -1,35 +1,37 @@
 <template>
   <div>
-    <router-link :to="`/RecommendDetail/${recommend.id}`">
-    {{ recommend.title }}
-    </router-link>
-    {{ recommend.discription }}
-    <span v-for="movie in recommend.movies" :key="movie.id">
-      <img :src="movie.post_url" alt="">     
-    </span>
+    <movieInRecommend />
+    {{recommends}}
     <button @click="goodRecommend(recommend.id)">좋아요</button>
-    <hr>
+    
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import movieInRecommend from '@/components/movieInRecommend'
 import jwtDecode from "jwt-decode";
 
 export default {
-  name: 'Recommend',
+  name: 'RecommendDetail',
   data() {
     return {
-
+      recommends: [],
+      user_id: this.$route.params.user_id,
     }
   },
   components: {
-
-  },
-  props: {
-    recommend: Object
+    movieInRecommend
   },
   methods: {
+    getRecommend() {
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP + `/movies/api/v1/recommendList/${this.user_id}/`;
+
+      axios.get(SERVER_IP)
+      .then(response => {
+        this.recommends = response.data.recommends
+      })
+    },
     goodRecommend(recommend_id) {
       console.log(recommend_id)
       const SERVER_IP = process.env.VUE_APP_SERVER_IP;
@@ -50,7 +52,12 @@ export default {
           console.log(error);
         })
     },
+  },
+  mounted() {
+    this.getRecommend()
   }
+
+  
 }
 </script>
 

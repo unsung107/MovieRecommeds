@@ -27,7 +27,7 @@ export default {
       .then(response => {
         this.recommends = response.data.recommends
       })
-    }
+    },
   },
   mounted() {
     this.getRecommend()
