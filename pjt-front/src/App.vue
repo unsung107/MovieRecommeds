@@ -10,8 +10,9 @@
         <router-link to="/adminPage">관리페이지</router-link> | 
         <router-link :to="`/userDetail/${user_id}`">마이페이지</router-link> | 
       </div>
-      
+
       <div v-else>
+         | 
         <router-link to="/">Home</router-link> | 
         <router-link to="/login" @login="checkLoggedIn">Login</router-link> | 
         <router-link to="/signup">Signup</router-link>  | 

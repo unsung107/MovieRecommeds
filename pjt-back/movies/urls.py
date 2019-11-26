@@ -14,9 +14,15 @@ urlpatterns = [
     path('api/v1/actorDetail/<int:actor_id>/', views.giveActorInfo, name='giveActorInfo'),
     path('api/v1/directorDetail/<int:director_id>/', views.giveDirectorInfo, name='giveDirectorInfo'),
     path('api/v1/userDetail/<int:user_id>/', views.giveUserDetail, name='giveUserDetail'),
+    path('api/v1/recommendDetail/<int:recommend_id>/', views.recommendDetail, name='recommendDetail'),
     
     path('api/v1/createRecommend/<int:user_id>/', views.createRecommend, name='createRecommend'),
 
     path('api/v1/recommendList/<int:user_id>/', views.recommendList, name='recommendList'),
+
+    path('likemovie/<int:movie_id>/<user_id>/', views.likemovie, name='likemovie'),
+    path('likedirector/<int:director_id>/<user_id>/', views.likedirector, name='likedirector'),
+    path('likeactor/<int:actor_id>/<user_id>/', views.likeactor, name='likeactor'),
+    path('likerecommend/<int:recommend_id>/<user_id>/', views.likerecommend, name='likerecommend'),
 
 ]
