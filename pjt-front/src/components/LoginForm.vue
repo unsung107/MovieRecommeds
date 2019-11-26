@@ -46,6 +46,8 @@ export default {
       errors: [],
     }
   },
+  props:{
+  },
   methods: {
     login() {
       if (this.checkForm()) {
