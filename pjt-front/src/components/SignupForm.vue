@@ -9,8 +9,13 @@
     <input type="password" v-model="credentials.password2"><br><br>
     <div>Enter your birthday</div>
     <input type="date" v-model="credentials.birthday"><br><br>
-    <button @click="signup">제출</button>
+    <button @click="signup">제출</button><br>
+    
+    <!-- <span v-for="error in errors[0].username" :key="error">{{error}}</span>
+    <span v-for="error in errors[0].password1" :key="error">{{error}}</span>
+    <span v-for="error in errors[0].password2" :key="error">{{error}}</span> -->
   </div>
+
 </template>
 
 <script>
@@ -47,14 +52,18 @@
           return false
         }
 
-        axios.post('http://127.0.0.1:8000/accounts/signup/', { 'username':id, 'password1':password1,'password2':password2, 'birthday':birthday, 'age':age })
+        axios.post('http://127.0.0.1:8000/accounts/signup/', { 'username':id, 'birthday':birthday, 'age':age, 'password1':password1,'password2':password2 })
           .then(res => {
-            // console.log(res)
-            if (res.status === 200) {
+
+            
+            if (res.data.age) {
                 // 성공적으로 회원가입이 되었을 경우
               this.$router.push({ name: 'home' })
             // } else {
             //   this.$router.push({ name: 'signup' })
+            } else {
+              this.errors.push(res.data)
+              console.log(this.errors[0])
             }
         })
       }
