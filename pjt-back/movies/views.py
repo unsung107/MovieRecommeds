@@ -1,15 +1,18 @@
 from .models import Movie, Review, Recommend, Actor, Director, CommingMovie, Genre, RecommendReview, MovieComment
-from .serializers import MovieSerializer, GenreSerializer, ActorSerializer, DirectorSerializer
+from .serializers import MovieSerializer, GenreSerializer, ActorSerializer, DirectorSerializer, RecommendSerializer, UserSerializer
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST, require_GET
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth import get_user_model
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from pprint import pprint
 from decouple import config
 import requests
 import datetime
 import bs4
+User = get_user_model()
 
 def findmovieupdate(request, movie_nm):
     
@@ -405,7 +408,7 @@ def searchMovie(request, movie_nm):
     movies = Movie.objects.filter(title__icontains=movie_nm)
     
     serializer = MovieSerializer(instance=movies, many=True)
-
+    pprint(serializer.data)
     return JsonResponse({'movies': serializer.data})
 
 def giveMovieInfo(request, movie_id):
@@ -441,3 +444,46 @@ def giveDirectorInfo(request, director_id):
     result = serializer.data
     result['movies'] = movie_list
     return JsonResponse(result)
+
+@api_view(['POST'])
+def createRecommend(request, user_id):
+
+    user = get_object_or_404(User, pk=user_id)
+    creation_form  = request.data
+    movies = creation_form['movies']
+    temp_recommend = Recommend()
+    temp_recommend.title = creation_form['title']
+    temp_recommend.user = user
+    temp_recommend.discription = creation_form['discription']
+    temp_recommend.save()
+    for movie in movies:
+
+        movie_id = movie['movie']['id']
+        add_movie = get_object_or_404(Movie, pk=movie_id)
+
+        add_moviecomment = movie['movieComment']
+        temp_movieComment = MovieComment()
+        temp_movieComment.content = add_moviecomment
+        temp_movieComment.recommend = temp_recommend
+        temp_movieComment.movie = add_movie
+        temp_movieComment.save()
+        temp_recommend.movies.add(add_movie)
+    return JsonResponse({})
+
+def recommendList(request, user_id):
+    if not user_id:
+        recommends = Recommend.objects.all()
+    else:
+        user = get_object_or_404(User, pk=user_id)
+        recommends = Recommend.objects.filter(user=user)
+    
+    serializer = RecommendSerializer(instance=recommends, many=True)
+
+    return JsonResponse({'recommends': serializer.data})
+    
+def giveUserDetail(reqeust, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    serializer = UserSerializer(instance=user)
+
+    return JsonResponse(serializer.data)
+    

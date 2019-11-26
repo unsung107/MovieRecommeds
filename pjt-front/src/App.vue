@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link> | 
       <router-link to="/login">Login</router-link> | 
       <router-link to="/signup">Signup</router-link>  | 
-      <router-link to="/createRecommend">추천리스트 작성</router-link>
+      <router-link to="/RecommendList">추천리스트</router-link>
       <router-link to="/adminPage">관리페이지</router-link>
     </div>
     <router-view/>

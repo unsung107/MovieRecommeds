@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Movie, Genre, Actor, Director
+from .models import Movie, Genre, Actor, Director, Recommend, MovieComment, CommingMovie
+
 User = get_user_model()
 
 class ActorSerializer(serializers.ModelSerializer):
@@ -30,7 +31,35 @@ class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
         fields = ('name', 'movies', )
+class MovieCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MovieComment
+        fields = ('movie_id', 'recommend_id', 'content', )
 
 
+class RecommendSerializer(serializers.ModelSerializer):
+    movies = MovieSerializer(many=True)
+    moviecomments = MovieCommentSerializer(many=True)
 
-        
+    class Meta:
+        model = Recommend
+        fields = ('user', 'title', 'discription', 'movies', 'moviecomments', )
+
+class CommingMovieSerializer(serializers.ModelSerializer):
+    liked_users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
+    class Meta:
+        model = CommingMovie
+        fields = ('title', 'openDt', 'post_url', 'liked_users', )
+
+class UserSerializer(serializers.ModelSerializer):
+    like_movies = MovieSerializer(many=True)
+    like_genres = GenreSerializer(many=True)
+    like_directors = DirectorSerializer(many=True)
+    like_actors = ActorSerializer(many=True)
+    like_commingmovies = CommingMovieSerializer(many=True)
+    like_recommends = RecommendSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'birthday', 'age', 'like_movies', 'like_genres', 'like_directors', 'like_actors', 'like_commingmovies', 'like_recommends', )

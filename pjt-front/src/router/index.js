@@ -8,6 +8,10 @@ import ActorDetail from '@/views/ActorDetail'
 import AdminPage from '@/views/AdminPage'
 import DirectorDetail from '@/views/DirectorDetail'
 import CreateRecommend from '@/views/CreateRecommend'
+import RecommendDetail from '@/views/RecommendDetail'
+import RecommendList from '@/views/RecommendList'
+import UserDetail from '@/views/UserDetail'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -51,7 +55,21 @@ const routes = [
     name: 'adminPage',
     component: AdminPage
   },
-
+  {
+    path: '/RecommendDetail/:user_id',
+    name: 'RecommendDetail',
+    component: RecommendDetail
+  },
+  {
+    path: '/RecommendList',
+    name: 'RecommendList',
+    component: RecommendList
+  },
+  {
+    path: '/UserDetail/:user_id',
+    name: 'UserDetail',
+    component: UserDetail
+  },
 ]
 
 const router = new VueRouter({

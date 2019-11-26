@@ -33,18 +33,22 @@
           <br />
         </span>
       </div>
+      <button class="btn btn-secondary" @click="createRecommend">제출하기</button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import jwtDecode from 'jwt-decode'
+import router from '@/router'
 
 export default {
   name: "CreateRecommend",
   data() {
     return {
       creationFrom: {
+        user_id: "",
         title: "",
         discription: "",
         movies: []
@@ -52,10 +56,21 @@ export default {
       searchKey: "",
       movies: [],
       selectedMovie: {},
-      makingMovieComment: ""
+      makingMovieComment: "",
+      token: "",
     };
   },
   methods: {
+    checkLoggedIn() {
+      this.$session.start()
+      if (!this.$session.has('jwt')) {
+        router('/login')
+      } else {
+        this.token = this.$session.get('jwt')
+        this.creationFrom.user_id = jwtDecode(this.token).user_id
+      }
+    },
+
     searching(movie_nm) {
       if (!movie_nm) {
         movie_nm = " ";
@@ -88,8 +103,27 @@ export default {
         this.makingMovieComment = "";
       }
       console.log(this.creationFrom);
+    },
+
+    createRecommend() {
+      const SERVER_IP = process.env.VUE_APP_SERVER_IP;
+
+      const options = {
+        headers: {
+          Authorization: 'JWT ' + this.token
+        }
+      }
+      console.log(options)
+      axios.post(SERVER_IP + `/movies/api/v1/createRecommend/${this.creationFrom.user_id}/`, this.creationFrom, options)
+      .then(response => {
+        console.log(response)
+      })
+
     }
-  }
+  },
+  mounted() {
+    this.checkLoggedIn()
+  },
 };
 </script>
 
