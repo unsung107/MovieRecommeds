@@ -15,6 +15,7 @@
 
 <script>
   import axios from 'axios'
+  // import date from 'date'
 
   export default {
     name: 'Signup',
@@ -24,7 +25,7 @@
           username: '',
           password1: '',
           password2: '',
-          birthday: 0,
+          birthday: new Date().toJSON().slice(0,10).replace(/-/g,'-'),
         },
       loading: false,
       errors: [],
@@ -38,20 +39,24 @@
         const birthday = this.credentials.birthday
 
         let born = birthday.split('-')[0]
-        console.log(born)
+
+        let currentDateWithFormat = new Date().toJSON().slice(0,10).replace(/-/g,'/').slice(0, 4)
+        let age = Number(currentDateWithFormat) - Number(born) + 1
 
         if (!id || !password1 || !password2 || !birthday) {
-            return false
+          return false
         }
 
-        axios.post('http://127.0.0.1:8000/accounts/signup/', { 'username':id, 'password1':password1,'password2':password2, 'birthday':birthday })
-            .then(res => {
-              console.log(res)
-                if (res.status === 200) {
-                    // 성공적으로 회원가입이 되었을 경우
-                    this.$router.push({ name: 'Signin' })
-                }
-            })
+        axios.post('http://127.0.0.1:8000/accounts/signup/', { 'username':id, 'password1':password1,'password2':password2, 'birthday':birthday, 'age':age })
+          .then(res => {
+            // console.log(res)
+            if (res.status === 200) {
+                // 성공적으로 회원가입이 되었을 경우
+              this.$router.push({ name: 'home' })
+            // } else {
+            //   this.$router.push({ name: 'signup' })
+            }
+        })
       }
     }
   }

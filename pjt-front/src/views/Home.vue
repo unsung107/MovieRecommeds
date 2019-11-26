@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    
     <button @click="getMovie(1)">범죄</button>
     <button @click="getMovie(2)">드라마</button>
     <button @click="getMovie(3)">액션</button>
