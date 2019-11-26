@@ -1,6 +1,15 @@
 <template>
   <div>
-    {{ userInfo }}
+    {{ userInfo.username }}
+    {{userInfo.birthday}}
+    <div v-for="recommend in userInfo.recommends" :key="recommend.id"> 
+      {{recommend.title}}
+      {{recommend.discription}}
+      
+      <div v-for="movie in recommend.movies" :key="movie.id">
+        <img :src="movie.post_url" alt="">
+      </div>
+    </div>
   </div>
 </template>
 
