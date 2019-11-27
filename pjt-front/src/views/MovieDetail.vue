@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <img class="movie--poster my-3" :src="movie.post_url" alt /><br>
-    <!-- {{movie}} -->
+    {{movie}}
     <span>{{ movie['title'] }}</span>
     <span>{{ movie['discription'] }}</span>
     <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
@@ -31,6 +31,7 @@
             class="movie--poster rounded-circle"
           />
           <br />
+          {{director}}
           {{ director.name }}
           <button v-if="token" @click="goodDirector(director.id)">좋아요</button>
         </router-link>
@@ -159,4 +160,8 @@ export default {
 </script>
 
 <style>
+img {
+  width: 200px;
+  height: 300px;
+}
 </style>
