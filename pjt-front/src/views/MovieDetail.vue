@@ -1,30 +1,35 @@
 <template>
   <div class="container">
+    <!-- movie poster -->
     <img class="movie--poster my-3" :src="movie.post_url" alt /><br>
+    <!-- movie title -->
     <div class="d-inline-block">
-  <h3>{{ movie['title'] }}</h3>
-  </div>
-    {{movie.video_url}}
-    <iframe :src="movie.video_url" frameborder="0"></iframe>
-    <span></span>
-    <span>{{ movie['discription'] }}</span>
-    <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
-    
-    <div v-if="token">
-      <input type="text" v-model="review.content" />
-      <input type="number" v-model="review.score" />
-      <button @click="createReview">작성</button>
+      <!-- {{ movie }} -->
+      <h3>{{ movie.title }}</h3>
     </div>
-    <div>
-      <span v-for="review in reviews" :key="review.id">{{review.username}} : {{review.content}}  {{review.id}}
-        <button v-if="token && user_id === review.user_id" @click="deleteReview(review.id)">x</button>
-        <br>
-      
-      </span>
+    <!-- movie 좋아요 -->
+    <div class="d-inline-block">
+      <h3>좋아요</h3>
     </div>
 
+    <!-- movie discription -->
+    <div class="d-inline-block">
+      <h6>{{ movie.discription }}</h6>
+    </div>
+    <!-- movie 평점 관객수 좋아요누른사람 -->
+    <div class="d-inline-block">
+      <h3>{{ movie.score }}</h3>
+    </div>
+    <div class="d-inline-block">
+      {{ movie.audience }}
+    </div>
+    <div class="d-inline-block">
+      <h3>좋아요누른사람</h3>
+    </div>
+
+    <!-- 감독, 배우 -->
     <div class="row">
-      <span class="card col-3 my-3" v-for="director in movie.directors" :key="director.id">
+      <span v-for="director in movie.directors" :key="director.id">
         감독
         <router-link :to="`/director/${director.id}`">
           <br />
@@ -39,7 +44,7 @@
           <button v-if="token" @click="goodDirector(director.id)">좋아요</button>
         </router-link>
       </span>
-      <span class="card col-3 my-3" v-for="actor in movie.actors" :key="actor.id">
+      <span v-for="actor in movie.actors" :key="actor.id">
         배우
         <router-link :to="`/actor/${actor.id}`">
         
@@ -55,6 +60,25 @@
         </router-link>
       </span>
     </div>
+
+    <img v-for="snapshot in movie.snapshot_url" :src="snapshot" alt="" :key="snapshot" class="snapshot">
+    <iframe :src="movie.video_url" frameborder="0" width="400px" height="300px"></iframe>
+    <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
+    
+    <div v-if="token">
+      <input type="text" v-model="review.content" />
+      <input type="number" v-model="review.score" />
+      <button @click="createReview">작성</button>
+    </div>
+    <div>
+      <span v-for="review in reviews" :key="review.id">{{review.username}} : {{review.content}}  {{review.id}}
+        <button v-if="token && user_id === review.user_id" @click="deleteReview(review.id)">x</button>
+        <br>
+      
+      </span>
+    </div>
+
+
   </div>
 </template>
 
@@ -170,6 +194,10 @@ export default {
 }
 .person--poster {
   width: 100px;
+  height: 150px;
+}
+.snapshot {
+  width: 200px;
   height: 150px;
 }
 </style>
