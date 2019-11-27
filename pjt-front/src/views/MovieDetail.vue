@@ -1,21 +1,22 @@
 <template>
   <div class="container">
     <!-- movie poster -->
-    <img class="movie--poster my-3" :src="movie.post_url" alt /><br>
+    <div class="d-inline-block" style="width:30%">
+    <img class="movie--poster my-3" :src="movie.post_url" alt />
+    </div>
     <!-- movie title -->
-    <div class="d-inline-block">
+    <div class="d-inline-block" style="width:70%">
       <!-- {{ movie }} -->
-      <h3>{{ movie.title }}</h3>
+      <h3>{{ movie.title }} 좋아요</h3>
+      {{movie.discription}}
     </div>
     <!-- movie 좋아요 -->
     <div class="d-inline-block">
-      <h3>좋아요</h3>
+      
     </div>
 
     <!-- movie discription -->
-    <div class="d-inline-block">
-      <h6>{{ movie.discription }}</h6>
-    </div>
+    
     <!-- movie 평점 관객수 좋아요누른사람 -->
     <div class="d-inline-block">
       <h3>{{ movie.score }}</h3>
@@ -60,19 +61,21 @@
         </router-link>
       </span>
     </div>
+    <hr>
 
     <!-- vedio -->
-    <iframe :src="movie.video_url" frameborder="0" width="400px" height="300px"></iframe>
-    
+    <div class="d-inline-block" style="width:40%">
+    <iframe :src="movie.video_url" frameborder="0" width="400px" height="300px" style="position:relative"></iframe>
+    </div>
+
     <!-- snapshot -->
-    
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div class="d-inline-block test" style="width:60%">
+    <div style="width:95.5% position:relative right:-20px" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li v-for="idx in movie.snapshot_url.length" :key="idx" data-target="#carouselExampleIndicators" :data-slide-to="idx"></li>
         
       </ol>
-      <!-- <div class="snapshot carousel-inner" v-for="snapshot in movie.snapshot_url" :src="snapshot" alt="" :key="snapshot"> -->
         <div class="carousel-inner">
         <div class="carousel-item active">
           <img class="d-block w-100" :src="movie.snapshot_url[0]" alt="First slide">
@@ -90,6 +93,8 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
+    </div>
+    <hr>
     <!-- review -->
     <div v-if="token">
       <input type="text" v-model="review.content" />
@@ -102,8 +107,6 @@
         <br>
       </span>
     </div>
-
-
   </div>
 </template>
 
@@ -213,5 +216,6 @@ export default {
 </script>
 
 <style>
-
+.test { height: 300px !important; overflow: hidden; }
+/* .test div, .test ol, .test img{ height: 300px !important;  } */
 </style>
