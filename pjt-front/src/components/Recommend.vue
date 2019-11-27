@@ -5,7 +5,7 @@
     </router-link>
     {{ recommend.discription }}
     <span v-for="movie in recommend.movies" :key="movie.id">
-      <img :src="movie.post_url" alt="">     
+      <img class="movie--poster my-3" :src="movie.post_url" alt="">     
     </span>
     <button @click="goodRecommend(recommend.id)">좋아요</button>
     <hr>
