@@ -519,6 +519,42 @@ def giveDirectorInfo(request, director_id):
     result['movies'] = movie_list
     return JsonResponse(result)
 
+def movieForUser(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+
+    result = {
+        'actors': [],
+        'directors': [],
+        'users': []
+    }
+    for actor in user.like_actors.all():
+        for movie in actor.movies.all():
+            if movie in user.like_movies.all():
+                continue
+            serializer = MovieSerializer(instance=movie)
+            if serializer.data in result['actors']:
+                continue
+            result['actors'].append(serializer.data)
+
+    for director in user.like_directors.all():
+        for movie in director.movies.all():
+            serializer = MovieSerializer(instance=movie)
+            if serializer.data in result['directors']:
+                continue
+            result['directors'].append(serializer.data)
+
+    for like_movie in user.like_movies.all():
+        for aside_user in like_movie.liked_users.all():
+            for movie in aside_user.like_movies.all():
+                if movie in user.like_movies.all():
+                    continue
+                serializer = MovieSerializer(instance=movie)
+                if serializer.data in result['users']:
+                    continue
+                result['users'].append(serializer.data)
+
+    return JsonResponse(result)
+
 @api_view(['POST'])
 def createRecommend(request, user_id):
 
@@ -543,6 +579,12 @@ def createRecommend(request, user_id):
         temp_movieComment.save()
         temp_recommend.movies.add(add_movie)
     return JsonResponse({})
+
+@api_view(['POST'])
+def deleteRecommend(reqeust, recommend_id):
+    recommend = get_object_or_404(Recommend, pk=recommend_id)
+    recommend.delete()
+    return Response(status=204)
 
 @api_view(['POST'])
 def createMovieReview(request, user_id, movie_id):

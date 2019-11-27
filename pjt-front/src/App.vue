@@ -48,6 +48,7 @@
         <router-link to="/RecommendList">추천리스트</router-link>|
         <router-link to="/adminPage">관리페이지</router-link>|
         <router-link :to="`/userDetail/${user_id}`">마이페이지</router-link>|
+        <router-link :to="`/MovieForYou`">MovieForYou</router-link>|
       </div>
 
       <div v-else>

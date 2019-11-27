@@ -15,8 +15,10 @@ urlpatterns = [
     path('api/v1/directorDetail/<int:director_id>/', views.giveDirectorInfo, name='giveDirectorInfo'),
     path('api/v1/userDetail/<int:user_id>/', views.giveUserDetail, name='giveUserDetail'),
     path('api/v1/recommendDetail/<int:recommend_id>/', views.recommendDetail, name='recommendDetail'),
+    path('api/v1/movieForUser/<int:user_id>/', views.movieForUser, name='movieForUser'),
     
     path('api/v1/createRecommend/<int:user_id>/', views.createRecommend, name='createRecommend'),
+    path('api/v1/deleteRecommend/<int:recommend_id>/', views.deleteRecommend, name='deleteRecommend'),
     path('api/v1/createMovieReview/<int:user_id>/<int:movie_id>/', views.createMovieReview, name='createMovieReview'),
     path('api/v1/deleteRevieReview/<int:review_id>/', views.deleteRevieReview, name='deleteRevieReview'),
     path('api/v1/createRecommendReview/<int:user_id>/<int:recommend_id>/', views.createRecommendReview, name='createRecommendReview'),

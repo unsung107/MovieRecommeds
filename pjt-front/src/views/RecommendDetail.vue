@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button v-if="token && recommend.user === user_id" @click="deleteRecommend">x</button>
     {{recommend.title}}
     {{recommend.discription}}
     {{recommend.user}}
@@ -36,6 +37,7 @@
 <script>
 import axios from "axios";
 import jwtDecode from 'jwt-decode'
+import router from "@/router"
 import movieInRecommend from '@/components/movieInRecommend'
 
 export default {
@@ -101,6 +103,13 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    deleteRecommend() {
+      axios.post(this.SERVER_IP + `/movies/api/v1/deleteRecommend/${this.recommend_id}/`, {}, this.options)
+    .then(response => {
+      response
+      router.push('/RecommendList')
+    })
     }
   },
   mounted() {

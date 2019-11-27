@@ -4,7 +4,7 @@
       title :
       <input type="text" v-model="creationFrom.title" />
       <br />discription :
-      <input type="text" v-model="creationFrom.discription" />
+      <textarea type="text" class="col-7 row-5"  v-model="creationFrom.discription" row="4" />
       <br />
       <button class="btn btn-primary" data-toggle="modal" data-target="#find_movie">영화 추가하기</button>
       <AddMovieInRecommendModal @selectMovie="modalAddMovie" />
