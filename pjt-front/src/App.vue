@@ -1,70 +1,66 @@
 <template>
   <div id="app">
     <div id="nav">
-
       <div v-if="isLoggedIn">
-         | 
-        <router-link to="/">Home</router-link> | 
-        <a @click.prevent="logout" href="/logout">Logout</a> | 
-        <router-link to="/createRecommend">추천리스트 작성</router-link> | 
-        <router-link to="/RecommendList">추천리스트</router-link> |
-        <router-link to="/adminPage">관리페이지</router-link> | 
-        <router-link :to="`/userDetail/${user_id}`">마이페이지</router-link> | 
+        |
+        <router-link to="/">Home</router-link>|
+        <a @click.prevent="logout" href="/logout">Logout</a> |
+        <router-link to="/createRecommend">추천리스트 작성</router-link>|
+        <router-link to="/RecommendList">추천리스트</router-link>|
+        <router-link to="/adminPage">관리페이지</router-link>|
+        <router-link :to="`/userDetail/${user_id}`">마이페이지</router-link>|
       </div>
 
       <div v-else>
-         | 
-        <router-link to="/">Home</router-link> | 
-        <router-link to="/login" @login="checkLoggedIn">Login</router-link> | 
-        <router-link to="/signup">Signup</router-link>  | 
+        |
+        <router-link to="/">Home</router-link>|
+        <router-link to="/login" @login="checkLoggedIn">Login</router-link>|
+        <router-link to="/signup">Signup</router-link>|
       </div>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import router from '@/router'
-import jwtDecode from 'jwt-decode'
+import router from "@/router";
+import jwtDecode from "jwt-decode";
 
 export default {
-  name: 'App',
+  name: "App",
   data() {
     return {
       isLoggedIn: false,
-      user_id: '',
-    }
+      user_id: ""
+    };
   },
   methods: {
-    checkLoggedIn(){
-      this.$session.start()
-      if(this.$session.has('jwt')) {
-        this.isLoggedIn = true
+    checkLoggedIn() {
+      this.$session.start();
+      if (this.$session.has("jwt")) {
+        this.isLoggedIn = true;
+        const token = this.$session.get("jwt");
+        this.user_id = jwtDecode(token).user_id;
       }
     },
     logout() {
-      this.$session.destroy()
-      this.isLoggedIn = false
-      router.push('/login')
-      
+      this.$session.destroy();
+      this.isLoggedIn = false;
+      router.push("/login");
     }
   },
   mounted() {
-    this.checkLoggedIn()
-    if (this.isLoggedIn) {
-      const token = this.$session.get('jwt')
-      this.user_id = jwtDecode(token).user_id
-    }
+    this.checkLoggedIn();
   },
   updated() {
-    this.checkLoggedIn()
+    this.checkLoggedIn();
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -2,11 +2,14 @@
   <div>
     {{ userInfo.username }}
     {{userInfo.birthday}}
-    <div v-for="recommend in userInfo.recommends" :key="recommend.id"> 
+    <div v-for="movie in userInfo.like_movies" :key="`movie-${movie.id}`"> 
+      {{movie.title}}
+    </div>
+    <div v-for="recommend in userInfo.recommends" :key="`recommend-${recommend.id}`"> 
       {{recommend.title}}
       {{recommend.discription}}
       
-      <div v-for="movie in recommend.movies" :key="movie.id">
+      <div v-for="movie in recommend.movies" :key="`recommendmovie-${movie.id}`">
         <img :src="movie.post_url" alt="">
       </div>
     </div>
@@ -32,7 +35,6 @@ export default {
       axios.get(SERVER_IP)
       .then(response => {
         this.userInfo = response.data
-        console.log(response.data)
       })
     }
   },

@@ -1,12 +1,11 @@
 <template>
   <div class="container">
-    
     <button @click="getMovie(1)">범죄</button>
     <button @click="getMovie(2)">드라마</button>
     <button @click="getMovie(3)">액션</button>
     <button @click="getMovie(5)">SF</button>
     <button @click="getMovie(11)">판타지</button>
-    <br/>
+    <br />
 
     <input type="text" v-model="searchKey" @input="searching(searchKey)" />
 
@@ -14,10 +13,9 @@
       <span class="card col-3 my-3" v-for="movie in movies" :key="movie.id">
         <router-link :to="`/movie/${movie.id}`">
           <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
-          
         </router-link>
         {{ movie.title }}
-        <button @click="goodMovie(movie.id)">좋아요</button>
+        <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
       </span>
     </div>
   </div>
@@ -35,7 +33,8 @@ export default {
     return {
       movies: [],
       searchKey: "",
-      user: '',
+      user: "",
+      token: this.$session.get("jwt")
     };
   },
   components: {
@@ -70,28 +69,34 @@ export default {
     },
     goodMovie(movie_id) {
       const SERVER_IP = process.env.VUE_APP_SERVER_IP;
-      this.$session.start()
-      const token = this.$session.get('jwt')
-      const user_id = jwtDecode(token).user_id
+      this.$session.start();
       const options = {
         headers: {
-          Authorization: 'JWT ' + token
+          Authorization: "JWT " + this.token
         }
-      }
-      
-      axios.post(SERVER_IP + `/movies/likemovie/${movie_id}/${user_id}/`, {} ,options)
+      };
+
+      axios
+        .post(
+          SERVER_IP + `/movies/likemovie/${movie_id}/${this.user_id}/`,
+          {},
+          options
+        )
         .then(response => {
-          console.log(response)
+          console.log(response);
         })
         .catch(error => {
           console.log(error);
-        })
-    },
+        });
+    }
   },
   mounted() {},
   computed: {
     movieList() {
       return this.movies;
+    },
+    user_id() {
+      return jwtDecode(this.token).user_id;
     }
   }
 };

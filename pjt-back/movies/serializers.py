@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Movie, Genre, Actor, Director, Recommend, MovieComment, CommingMovie
+from .models import Movie, Genre, Actor, Director, Recommend, MovieComment, CommingMovie, Review, RecommendReview
 
 User = get_user_model()
 
@@ -18,12 +18,26 @@ class DirectorSerializer(serializers.ModelSerializer):
         model = Director
         fields = ('id', 'name', 'image_url', 'movies',)
 
+class ReviewSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Review
+        fields = ('id', 'user', 'score', 'content', )
+
+class RecommendReviewSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = RecommendReview
+        fields = ('id', 'user', 'content', )
+
 class MovieSerializer(serializers.ModelSerializer):
     actors = ActorSerializer(many=True)
     directors = DirectorSerializer(many=True)
+    reviews = ReviewSerializer(many=True)
+    
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'discription', 'post_url', 'audience', 'watch_grade_name', 'actors', 'directors')
+        fields = ('id', 'title', 'discription', 'post_url', 'audience', 'watch_grade_name', 'actors', 'directors', 'reviews')
 
 class GenreSerializer(serializers.ModelSerializer):
     movies = MovieSerializer(many=True)
@@ -41,10 +55,10 @@ class MovieCommentSerializer(serializers.ModelSerializer):
 class RecommendSerializer(serializers.ModelSerializer):
     movies = MovieSerializer(many=True)
     moviecomments = MovieCommentSerializer(many=True)
-
+    recommend_reviews = RecommendReviewSerializer(many=True)
     class Meta:
         model = Recommend
-        fields = ('user', 'title', 'discription', 'movies', 'moviecomments', 'id', )
+        fields = ('user', 'title', 'discription', 'movies', 'moviecomments', 'id', 'recommend_reviews', )
 
 class CommingMovieSerializer(serializers.ModelSerializer):
     liked_users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
@@ -59,7 +73,8 @@ class UserSerializer(serializers.ModelSerializer):
     like_actors = ActorSerializer(many=True)
     like_commingmovies = CommingMovieSerializer(many=True)
     like_recommends = RecommendSerializer(many=True)
+    recommends = RecommendSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('username', 'birthday', 'age', 'like_movies', 'like_genres', 'like_directors', 'like_actors', 'like_commingmovies', 'like_recommends', )
+        fields = ('username', 'birthday', 'age', 'like_movies', 'like_genres', 'like_directors', 'like_actors', 'like_commingmovies', 'like_recommends', 'recommends',)
