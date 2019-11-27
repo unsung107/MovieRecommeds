@@ -425,6 +425,8 @@ def movieupdate(request):
                 temp_movie.watch_grade_name = watchGradeNm
                 temp_movie.discription = discription
                 temp_movie.snapshot_url = snapshot_url
+                temp_movie.video_url = video_url
+                
                 try:
                     temp_movie.save()
                 except:
