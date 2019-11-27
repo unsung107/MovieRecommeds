@@ -18,7 +18,8 @@
     </div>
     <!-- movie 평점 관객수 좋아요누른사람 -->
     <div class="d-inline-block">
-      <h3>{{ movie.score }}</h3>
+      평점
+      <!-- <h3>{{ movie.score }}</h3> -->
     </div>
     <div class="d-inline-block">
       {{ movie.audience }}
@@ -193,8 +194,8 @@ export default {
   height: 300px;
 }
 .person--poster {
-  width: 100px;
-  height: 150px;
+  width: 70px;
+  height: 90px;
 }
 .snapshot {
   width: 200px;
