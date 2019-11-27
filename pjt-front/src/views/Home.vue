@@ -10,7 +10,7 @@
     <input type="text" v-model="searchKey" @input="searching(searchKey)" />
 
     <div class="row">
-      <span class=" card col-3 my-3" v-for="movie in movies" :key="movie.id">
+      <span class="border-0 card col-3 my-3" v-for="movie in movies" :key="movie.id">
         <router-link :to="`/movie/${movie.id}`">
           <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
         </router-link>
