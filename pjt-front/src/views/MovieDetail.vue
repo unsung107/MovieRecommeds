@@ -2,36 +2,29 @@
   <div class="container">
     <!-- movie poster -->
     <div class="d-inline-block" style="width:30%">
-    <img class="movie--poster my-3" :src="movie.post_url" alt />
+      <img class="movie--poster my-3" :src="movie.post_url" alt />
     </div>
-    <!-- movie title -->
+    <!-- movie title discription -->
     <div class="d-inline-block" style="width:70%">
       <!-- {{ movie }} -->
-      <h3>{{ movie.title }} 좋아요</h3>
-      {{movie.discription}}
+      <h3>{{ movie.title }}</h3>
+      {{ movie.discription }}
     </div>
-    <!-- movie 좋아요 -->
-    <div class="d-inline-block">
-      
-    </div>
-
-    <!-- movie discription -->
-    
     <!-- movie 평점 관객수 좋아요누른사람 -->
     <div class="d-inline-block">
       <h3>{{ movie.score }}</h3>
     </div>
     <div class="d-inline-block">
       {{ movie.audience }}
+      <i class="fas fa-heart fa-lg" style="color:red">좋아요</i>
     </div>
     <div class="d-inline-block">
       <h3>좋아요누른사람</h3>
     </div>
-
     <!-- 감독, 배우 -->
     <div class="row">
+      감독
       <span v-for="director in movie.directors" :key="director.id">
-        감독
         <router-link :to="`/director/${director.id}`">
           <br />
           <img
@@ -40,15 +33,14 @@
             :key="director.id"
             class="person--poster rounded-circle"
           />
-          <br />
+          <br/>
           {{ director.name }}
           <button v-if="token" @click="goodDirector(director.id)">좋아요</button>
         </router-link>
       </span><hr>
+      배우
       <span v-for="actor in movie.actors" :key="actor.id">
-        배우
         <router-link :to="`/actor/${actor.id}`">
-        
           <img
             :src="actor.image_url"
             :alt="actor.name"
@@ -62,19 +54,16 @@
       </span>
     </div>
     <hr>
-
     <!-- vedio -->
     <div class="d-inline-block" style="width:40%">
     <iframe :src="movie.video_url" frameborder="0" width="400px" height="300px" style="position:relative"></iframe>
     </div>
-
     <!-- snapshot -->
     <div class="d-inline-block test" style="width:60%">
-    <div style="width:95.5% position:relative right:-20px" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div style="width:80%" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li v-for="idx in movie.snapshot_url.length" :key="idx" data-target="#carouselExampleIndicators" :data-slide-to="idx"></li>
-        
       </ol>
         <div class="carousel-inner">
         <div class="carousel-item active">
@@ -109,7 +98,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import jwtDecode from "jwt-decode";
@@ -214,7 +202,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .test { height: 300px !important; overflow: hidden; }
 /* .test div, .test ol, .test img{ height: 300px !important;  } */
