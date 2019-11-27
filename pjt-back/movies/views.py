@@ -238,7 +238,7 @@ def movieupdate(request):
     }
     NAVER_BASE_URL = config('NAVER_BASE_URL')
 
-    for week_ago in range(1, 5):
+    for week_ago in range(1, 7):
         print(week_ago)
         targetDt = datetime.date.today() - datetime.timedelta(weeks=week_ago)
         targetDt = targetDt.strftime('%Y%m%d')
@@ -375,6 +375,9 @@ def movieupdate(request):
                     for string in videos:
                         if 'videoPlayer' in string:
                             video_url = 'https://movie.naver.com' + string[5:-8] + '330x240'
+                            video_url = video_url.replace('amp;', '')
+                else:
+                    video_url = ''
 
                 for person in actors + directors:
                     peopleNm = person['peopleNm']
@@ -477,11 +480,15 @@ def giveMovieInfo(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     serializer = MovieSerializer(instance=movie)
     result = serializer.data
+    result['snapshot_url'] = []
     
+    for snapshot in serializer.data['snapshot_url'].split(', '):
+        if 'https://ssl.pstatic.net/static/movie/2012/06/adult_img74x74.png' == snapshot:
+            continue
+        result['snapshot_url'].append(snapshot)
     reviews = result['reviews']
     reviews = [{'id': review['id'], 'user_id': review['user'],'username': get_object_or_404(User, pk=review['user']).username,'score': review['score'], 'content': review['content']} for review in reviews]
     result['reviews'] = reviews
-
     return JsonResponse(result)
 
 def giveActorInfo(request, actor_id):
