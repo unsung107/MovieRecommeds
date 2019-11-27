@@ -1,11 +1,15 @@
 <template>
   <div class="container">
     <img class="movie--poster my-3" :src="movie.post_url" alt /><br>
-    {{movie}}
-    <span>{{ movie['title'] }}</span>
+    <div class="d-inline-block">
+  <h3>{{ movie['title'] }}</h3>
+  </div>
+    {{movie.video_url}}
+    <iframe :src="movie.video_url" frameborder="0"></iframe>
+    <span></span>
     <span>{{ movie['discription'] }}</span>
     <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
-    review
+    
     <div v-if="token">
       <input type="text" v-model="review.content" />
       <input type="number" v-model="review.score" />
@@ -28,10 +32,9 @@
             :src="director.image_url"
             :alt="director.name"
             :key="director.id"
-            class="movie--poster rounded-circle"
+            class="person--poster rounded-circle"
           />
           <br />
-          {{director}}
           {{ director.name }}
           <button v-if="token" @click="goodDirector(director.id)">좋아요</button>
         </router-link>
@@ -39,11 +42,12 @@
       <span class="card col-3 my-3" v-for="actor in movie.actors" :key="actor.id">
         배우
         <router-link :to="`/actor/${actor.id}`">
+        
           <img
             :src="actor.image_url"
             :alt="actor.name"
             :key="actor.id"
-            class="movie--poster rounded-circle"
+            class="person--poster rounded-circle"
           />
           <br />
           {{ actor.name }}
@@ -160,8 +164,12 @@ export default {
 </script>
 
 <style>
-img {
+.movie--poster {
   width: 200px;
   height: 300px;
+}
+.person--poster {
+  width: 100px;
+  height: 150px;
 }
 </style>
