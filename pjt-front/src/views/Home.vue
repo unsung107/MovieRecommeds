@@ -19,7 +19,6 @@
         {{ movie.title }}
         <button @click="goodMovie(movie.id)">좋아요</button>
       </span>
-        
     </div>
   </div>
 </template>
