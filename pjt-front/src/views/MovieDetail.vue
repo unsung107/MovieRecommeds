@@ -43,7 +43,7 @@
           {{ director.name }}
           <button v-if="token" @click="goodDirector(director.id)">좋아요</button>
         </router-link>
-      </span>
+      </span><hr>
       <span v-for="actor in movie.actors" :key="actor.id">
         배우
         <router-link :to="`/actor/${actor.id}`">
@@ -61,10 +61,36 @@
       </span>
     </div>
 
-    <img v-for="snapshot in movie.snapshot_url" :src="snapshot" alt="" :key="snapshot" class="snapshot">
+    <!-- vedio -->
     <iframe :src="movie.video_url" frameborder="0" width="400px" height="300px"></iframe>
-    <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
     
+    <!-- snapshot -->
+    
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li v-for="idx in movie.snapshot_url.length" :key="idx" data-target="#carouselExampleIndicators" :data-slide-to="idx"></li>
+        
+      </ol>
+      <!-- <div class="snapshot carousel-inner" v-for="snapshot in movie.snapshot_url" :src="snapshot" alt="" :key="snapshot"> -->
+        <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" :src="movie.snapshot_url[0]" alt="First slide">
+        </div>
+        <div v-for="idx in movie.snapshot_url.length - 1" :key="`snapshot-${idx}`" class="carousel-item">
+          <img class="d-block w-100" :src="movie.snapshot_url[idx]" alt="Second slide">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <!-- review -->
     <div v-if="token">
       <input type="text" v-model="review.content" />
       <input type="number" v-model="review.score" />
@@ -74,7 +100,6 @@
       <span v-for="review in reviews" :key="review.id">{{review.username}} : {{review.content}}  {{review.id}}
         <button v-if="token && user_id === review.user_id" @click="deleteReview(review.id)">x</button>
         <br>
-      
       </span>
     </div>
 
@@ -188,16 +213,5 @@ export default {
 </script>
 
 <style>
-.movie--poster {
-  width: 200px;
-  height: 300px;
-}
-.person--poster {
-  width: 100px;
-  height: 150px;
-}
-.snapshot {
-  width: 200px;
-  height: 150px;
-}
+
 </style>
