@@ -12,6 +12,7 @@ import UserRecommend from '@/views/UserRecommend'
 import RecommendList from '@/views/RecommendList'
 import UserDetail from '@/views/UserDetail'
 import RecommendDetail from '@/views/RecommendDetail'
+import MovieForYou from '@/views/MovieForYou'
 
 Vue.use(VueRouter)
 
@@ -76,7 +77,11 @@ const routes = [
     name: 'RecommendDetail',
     component: RecommendDetail
   },
-  
+  {
+    path: '/MovieForYou',
+    name: 'MovieForYou',
+    component: MovieForYou
+  },
 ]
 
 const router = new VueRouter({

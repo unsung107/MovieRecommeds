@@ -238,7 +238,7 @@ def movieupdate(request):
     }
     NAVER_BASE_URL = config('NAVER_BASE_URL')
 
-    for week_ago in range(1, 7):
+    for week_ago in range(1, 2):
         print(week_ago)
         targetDt = datetime.date.today() - datetime.timedelta(weeks=week_ago)
         targetDt = targetDt.strftime('%Y%m%d')
@@ -306,7 +306,7 @@ def movieupdate(request):
                 snapshot_link = movie_naver_detail['items'][0]['link'].replace('basic', 'photoView')
                 video_link = movie_naver_detail['items'][0]['link'].replace('basic', 'media')
                 print(movieNm)
-                post_url = './assets/base_poster.jpg'
+                post_url = '@/assets/base_poster.jpg'
                 
                 
                 userRating = movie_naver_detail['items'][0]['userRating']
@@ -381,7 +381,7 @@ def movieupdate(request):
 
                 for person in actors + directors:
                     peopleNm = person['peopleNm']
-                    img_url = './assets/base_person.jpg'
+                    img_url = '@/assets/base_person.jpg'
 
                     if naver_movie:
                         img_tag = naver_movie.select_one(f'img[alt="{peopleNm}"]')
