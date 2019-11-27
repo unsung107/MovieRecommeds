@@ -1,5 +1,9 @@
 {
   "projects": {
+<<<<<<< HEAD
     "default": "vue-project-3b358"
+=======
+    "default": "movie-recommendation-20682"
+>>>>>>> 702ea92df88434998527375f865f9abea69d3f70
   }
 }

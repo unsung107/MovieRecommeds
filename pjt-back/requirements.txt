@@ -6,11 +6,24 @@ Django==2.2.7
 django-cors-headers==3.2.0
 djangorestframework==3.10.3
 djangorestframework-jwt==1.11.0
+<<<<<<< HEAD
 idna==2.8
 Pillow==6.2.1
 PyJWT==1.7.1
 python-decouple==3.3
 pytz==2019.3
+=======
+get==2019.4.13
+idna==2.8
+Pillow==6.2.1
+post==2019.4.13
+public==2019.4.13
+PyJWT==1.7.1
+python-decouple==3.3
+pytz==2019.3
+query-string==2019.4.13
+request==2019.4.13
+>>>>>>> 702ea92df88434998527375f865f9abea69d3f70
 requests==2.22.0
 soupsieve==1.9.5
 sqlparse==0.3.0

@@ -19,8 +19,18 @@
       "user_permissions": [],
       "like_movies": [],
       "like_genres": [],
+<<<<<<< HEAD
       "like_directors": [],
       "like_actors": [],
+=======
+      "like_directors": [
+        2
+      ],
+      "like_actors": [
+        1,
+        4
+      ],
+>>>>>>> 702ea92df88434998527375f865f9abea69d3f70
       "like_commingmovies": [],
       "like_recommends": [],
       "like_reviews": []

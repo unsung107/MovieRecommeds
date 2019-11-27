@@ -1,14 +1,19 @@
 {
-    "python.pythonPath": "pjt-back\\venv\\Scripts\\python.exe",
+    "python.pythonPath": "venv\\Scripts\\python.exe",
+    "git.ignoreLimitWarning": true,
     "files.associations": {
         "**/templates/*.html": "django-html",
         "**/templates/*": "django-txt",
         "**/requirements{/**,*}.{txt,in}": "pip-requirements",
         "**/*.config": "yaml"
+<<<<<<< HEAD
     },
     "emmet.includeLanguages": {
         "django-html": "html"
+=======
+>>>>>>> 702ea92df88434998527375f865f9abea69d3f70
     },
+    "emmet.includeLanguages": {"django-html": "html"},
     "[django-html]": {
         "editor.tabSize": 2
     }
