@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+    <div class="container">
     <button @click="getMovie(1)">범죄</button>
     <button @click="getMovie(2)">드라마</button>
     <button @click="getMovie(3)">액션</button>
@@ -18,6 +18,7 @@
         <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
       </span>
     </div>
+
   </div>
 </template>
 
@@ -34,11 +35,9 @@ export default {
       movies: [],
       searchKey: "",
       user: "",
-      token: this.$session.get("jwt")
     };
   },
   components: {
-    // MovieDetail
   },
   methods: {
     getMovie(genre_id) {
@@ -98,7 +97,7 @@ export default {
     user_id() {
       return jwtDecode(this.token).user_id;
     }
-  }
+  },
 };
 </script>
 

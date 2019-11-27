@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <img class="movie--poster my-3" :src="movie.post_url" alt />
+    <img class="movie--poster my-3" :src="movie.post_url" alt /><br>
+    <!-- {{movie}} -->
+    <span>{{ movie['title'] }}</span>
+    <span>{{ movie['discription'] }}</span>
     <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
     review
     <div v-if="token">
