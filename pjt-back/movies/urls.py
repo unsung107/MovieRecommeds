@@ -17,6 +17,10 @@ urlpatterns = [
     path('api/v1/recommendDetail/<int:recommend_id>/', views.recommendDetail, name='recommendDetail'),
     
     path('api/v1/createRecommend/<int:user_id>/', views.createRecommend, name='createRecommend'),
+    path('api/v1/createMovieReview/<int:user_id>/<int:movie_id>/', views.createMovieReview, name='createMovieReview'),
+    path('api/v1/deleteRevieReview/<int:review_id>/', views.deleteRevieReview, name='deleteRevieReview'),
+    path('api/v1/createRecommendReview/<int:user_id>/<int:recommend_id>/', views.createRecommendReview, name='createRecommendReview'),
+    path('api/v1/deleteRecommendReview/<int:review_id>/', views.deleteRecommendReview, name='deleteRecommendReview'),
 
     path('api/v1/recommendList/<int:user_id>/', views.recommendList, name='recommendList'),
 
@@ -24,5 +28,7 @@ urlpatterns = [
     path('likedirector/<int:director_id>/<user_id>/', views.likedirector, name='likedirector'),
     path('likeactor/<int:actor_id>/<user_id>/', views.likeactor, name='likeactor'),
     path('likerecommend/<int:recommend_id>/<user_id>/', views.likerecommend, name='likerecommend'),
+
+
 
 ]

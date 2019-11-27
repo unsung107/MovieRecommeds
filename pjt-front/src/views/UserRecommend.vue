@@ -2,7 +2,7 @@
   <div>
     <movieInRecommend />
     {{recommends}}
-    <button @click="goodRecommend(recommend.id)">좋아요</button>
+    <button v-if="token" @click="goodRecommend(recommend.id)">좋아요</button>
     
   </div>
 </template>

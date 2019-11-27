@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from .forms import ReviewCreationForm, RecommendReviewCreationForm
 from pprint import pprint
 from decouple import config
 import requests
@@ -330,7 +331,10 @@ def movieupdate(request):
                         
                         for string in str(img_tag).split():
                             if string[:3] == 'src':
-                                img_url = string.split('jpg')[0][5:] + 'jpg'
+                                if 'jpg' in string:
+                                    img_url = string.split('jpg')[0][5:] + 'jpg'
+                                elif 'png' in string:
+                                    img_url = string.split('png')[0][5:] + 'png'
 
                     person_detail_url = f'{BASE_URL}/people/searchPeopleList.json?key={key}&peopleNm={peopleNm}&filmoNames={movieNm}'
                     people_list = requests.get(person_detail_url).json()['peopleListResult']
@@ -415,7 +419,13 @@ def giveMovieInfo(request, movie_id):
     
     movie = get_object_or_404(Movie, pk=movie_id)
     serializer = MovieSerializer(instance=movie)
-    return JsonResponse(serializer.data)
+    result = serializer.data
+    
+    reviews = result['reviews']
+    reviews = [{'id': review['id'], 'user_id': review['user'],'username': get_object_or_404(User, pk=review['user']).username,'score': review['score'], 'content': review['content']} for review in reviews]
+    result['reviews'] = reviews
+
+    return JsonResponse(result)
 
 def giveActorInfo(request, actor_id):
     
@@ -470,6 +480,57 @@ def createRecommend(request, user_id):
         temp_recommend.movies.add(add_movie)
     return JsonResponse({})
 
+@api_view(['POST'])
+def createMovieReview(request, user_id, movie_id):
+    form = ReviewCreationForm(request.data)
+    
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user_id = user_id
+        comment.movie_id = movie_id
+        comment.save()
+
+        context = {
+            'id': comment.id,
+            'user': user_id,
+            'username': get_object_or_404(User, pk=user_id).username,
+            'content': comment.content,
+            'score': comment.score,
+        }
+        return JsonResponse(context)
+    return JsonResponse(form.data)
+
+@api_view(['POST'])
+def deleteRevieReview(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
+    review.delete()
+    return Response(status=204)
+
+@api_view(['POST'])
+def createRecommendReview(request, user_id, recommend_id):
+    form = RecommendReviewCreationForm(request.data)
+    
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user_id = user_id
+        comment.recommend_id = recommend_id
+        comment.save()
+
+        context = {
+            'id': comment.id,
+            'user': user_id,
+            'username': get_object_or_404(User, pk=user_id).username,
+            'content': comment.content,
+        }
+        return JsonResponse(context)
+    return JsonResponse(form.data)
+    
+@api_view(['POST'])
+def deleteRecommendReview(request, review_id):
+    review = get_object_or_404(RecommendReview, pk=review_id)
+    review.delete()
+    return Response(status=204)
+
 def recommendList(request, user_id):
     if not user_id:
         recommends = Recommend.objects.all()
@@ -491,7 +552,14 @@ def recommendDetail(request, recommend_id):
     recommend = get_object_or_404(Recommend, pk=recommend_id)
     serializer = RecommendSerializer(instance=recommend)
 
-    return JsonResponse(serializer.data)
+    result = serializer.data
+    
+    reviews = result['recommend_reviews']
+    reviews = [{'id': review['id'], 'user_id': review['user'],'username': get_object_or_404(User, pk=review['user']).username, 'content': review['content']} for review in reviews]
+    result['recommend_reviews'] = reviews
+    
+
+    return JsonResponse(result)
 
 
 @api_view(['POST'])
