@@ -18,7 +18,7 @@ export default {
     findMovieUpdate() {
       if (this.searchKey) {
         console.log('start')
-        const API_URL = `http://127.0.0.1:8000/movies/findmovieupdate/${this.searchKey}/`
+        const API_URL = `http://127.0.0.1:8000/movies/movieupdate/`
         axios.get(API_URL)
         .then(response =>{
           console.log(response)

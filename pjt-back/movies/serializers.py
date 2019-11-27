@@ -49,7 +49,7 @@ class MovieCommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MovieComment
-        fields = ('movie_id', 'recommend_id', 'content', )
+        fields = ('movie_id', 'recommend_id', 'content', 'video_url', 'snapshot_url', )
 
 
 class RecommendSerializer(serializers.ModelSerializer):

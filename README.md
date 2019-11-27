@@ -27,6 +27,7 @@ $ pip install bs4
 $ pip install requests
 $ pip install django-cors-headers
 $ pip install djangorestframework-jwt
+$ pip install Pillow
 
 # Vue
 $ npm init

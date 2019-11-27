@@ -16,6 +16,7 @@ class Movie(models.Model):
     watch_grade_name = models.CharField(max_length=20)
     score = models.FloatField()
     video_url = models.TextField()
+    snapshot_url = models.TextField()
 
     genres = models.ManyToManyField(Genre, related_name='movies')
     
@@ -31,6 +32,9 @@ class Review(models.Model):
 class Recommend(models.Model):
     title = models.CharField(max_length=40)
     discription = models.TextField()
+    img_file = models.ImageField()
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='recommends')
     movies = models.ManyToManyField(Movie, related_name='recommends')

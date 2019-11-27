@@ -227,6 +227,7 @@ def commingmovieupdate(request):
 
 # @require_POST
 def movieupdate(request):
+    print('start')
     
     key = config('API_KEY')
     BASE_URL = config('BASE_URL')
@@ -237,7 +238,7 @@ def movieupdate(request):
     }
     NAVER_BASE_URL = config('NAVER_BASE_URL')
 
-    for week_ago in range(130, 200):
+    for week_ago in range(1, 5):
         print(week_ago)
         targetDt = datetime.date.today() - datetime.timedelta(weeks=week_ago)
         targetDt = targetDt.strftime('%Y%m%d')
@@ -302,9 +303,11 @@ def movieupdate(request):
                     print('네이버 정보가 없네요 : ', movieNm)
                     continue
                 movie_link = movie_naver_detail['items'][0]['link'].replace('basic', 'detail')
+                snapshot_link = movie_naver_detail['items'][0]['link'].replace('basic', 'photoView')
+                video_link = movie_naver_detail['items'][0]['link'].replace('basic', 'media')
                 print(movieNm)
                 post_url = '../assets/base_poster.jpg'
-                post_url = movie_naver_detail['items'][0]['image']
+                
                 
                 userRating = movie_naver_detail['items'][0]['userRating']
 
@@ -316,11 +319,62 @@ def movieupdate(request):
                 else:
                     discription = ''
                 
+                post_tag = str(discription_page.select_one('.wide_info_area .poster a img')).split()
+
+                for string in post_tag:
+                    if string[:3] == 'src':
+                        if 'jpg' in string:
+                            post_url = string.split('jpg')[0][5:] + 'jpg'
+                        elif 'png' in string:
+                            post_url = string.split('png')[0][5:] + 'png'
+
                 html = requests.get(movie_link+'#tab').text
                 naver_movie = bs4.BeautifulSoup(html, 'html.parser')
                 
                 naver_movie = naver_movie.select_one('.lst_people')
                 
+                snapshot_html = requests.get(snapshot_link).text
+                snapshot_page = bs4.BeautifulSoup(snapshot_html, 'html.parser')
+                snapshots = str(snapshot_page.select_one('.list_area .rolling_list ul')).split('</li>')
+                snapshot_list = []
+                for snapshot in snapshots:
+                    if 'STILLCUT' in snapshot:
+                        snapshot_list.append(snapshot)
+                snapshot_url = ''
+                for snapshot in snapshot_list:
+                    snapshot = snapshot.split()
+                    for string in snapshot:
+                        if string[:3] == 'src':
+                            if 'jpg' in string:
+                                snapshot_url += string.split('jpg')[0][5:] + 'jpg, '
+                            elif 'png' in string:
+                                snapshot_url = string.split('png')[0][5:] + 'png, '
+
+                if snapshot_url:
+                    snapshot_url = snapshot_url[:-2]
+
+                video_html = requests.get(video_link).text
+                video_page = bs4.BeautifulSoup(video_html, 'html.parser')
+                videos = str(video_page.select_one('.video_thumb')).split('</li>')
+                video_url = ''
+                for video in videos:
+                    if '메인 예고편' in video:
+                        video_url = video
+                video_url = video_url.split()
+                video_href = ''
+                for string in video_url:
+                    if 'href' in string:
+                        video_href = string[6:-1]
+                if video_href:
+                    video_href = 'https://movie.naver.com' + video_href
+
+                    video_html = requests.get(video_href).text
+                    video_page = bs4.BeautifulSoup(video_html, 'html.parser')
+                    videos = str(video_page.select_one('iframe')).split()
+
+                    for string in videos:
+                        if 'videoPlayer' in string:
+                            video_url = 'https://movie.naver.com' + string[5:-8] + '330x240'
 
                 for person in actors + directors:
                     peopleNm = person['peopleNm']
@@ -370,6 +424,7 @@ def movieupdate(request):
                 temp_movie.watch_grade = watchgrade
                 temp_movie.watch_grade_name = watchGradeNm
                 temp_movie.discription = discription
+                temp_movie.snapshot_url = snapshot_url
                 try:
                     temp_movie.save()
                 except:
