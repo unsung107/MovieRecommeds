@@ -1,26 +1,28 @@
 <template>
   <div>
-    <!-- {{recommend}} -->
     {{recommend.title}}
     {{recommend.discription}}
     {{recommend.user}}
-    <button v-if="token" @click="goodRecommend(recommend.id)">좋아요</button>
+    <button v-if="token" @click="goodRecommend(recommend.id)">좋아요</button><br>
+    <span>
+      <movieInRecommend :movie="recommend.movies[0]" :moviecomment="recommend.moviecomments[0]"/>
+    </span>
+    <hr>
     <span
-      v-for="movie in recommend.movies"
-      :key="movie.id"
+      v-for="idx in recommend.movies.length - 1"
+      :key="`movieinrecommend-${idx}`"
     >
-      {{movie.title}}
-      <img :src="movie.post_url" />
+      <movieInRecommend :movie="recommend.movies[idx]" :moviecomment="recommend.moviecomments[idx]"/>
+      <hr>
     </span>
 
     <div v-if="token">
       <input type="text" v-model="review.content" />
-      <input type="number" v-model="review.score" />
       <button @click="createReview">작성</button>
     </div>
     <div>
       <span v-for="review in recommend_reviews" :key="review.id">
-        {{review.username}} : {{review.content}} {{review.id}}
+        <router-link :to="`/UserDetail/${review.user}`">{{review.username}}</router-link> : {{review.content}} {{review.id}}
         <button
           v-if="token && user_id === review.user_id"
           @click="deleteReview(review.id)"
@@ -34,6 +36,7 @@
 <script>
 import axios from "axios";
 import jwtDecode from 'jwt-decode'
+import movieInRecommend from '@/components/movieInRecommend'
 
 export default {
   name: "RecommendDetail",
@@ -44,11 +47,13 @@ export default {
       token: this.$session.get("jwt"),
       review: {
         content: "",
-        score: 0
       },
       recommend_reviews: [],
       SERVER_IP: process.env.VUE_APP_SERVER_IP
     };
+  },
+  components: {
+    movieInRecommend
   },
   computed: {
     user_id: function() {

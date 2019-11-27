@@ -1,19 +1,17 @@
 <template>
   <div>
-    <movieInRecommend />
-    {{recommends}}
-    <button v-if="token" @click="goodRecommend(recommend.id)">좋아요</button>
     
+    <Recommend v-for="recommend in recommends" :key="recommend.id" :recommend="recommend" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import movieInRecommend from '@/components/movieInRecommend'
+import Recommend from '@/components/Recommend'
 import jwtDecode from "jwt-decode";
 
 export default {
-  name: 'RecommendDetail',
+  name: 'UserRecommend',
   data() {
     return {
       recommends: [],
@@ -21,7 +19,12 @@ export default {
     }
   },
   components: {
-    movieInRecommend
+    Recommend
+  },
+  computed: {
+    token() {
+      return this.$session.get('jwt')
+    }
   },
   methods: {
     getRecommend() {

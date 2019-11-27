@@ -5,20 +5,13 @@
     <div v-for="movie in userInfo.like_movies" :key="`movie-${movie.id}`"> 
       {{movie.title}}
     </div>
-    <div v-for="recommend in userInfo.recommends" :key="`recommend-${recommend.id}`"> 
-      {{recommend.title}}
-      {{recommend.discription}}
-      
-      <div v-for="movie in recommend.movies" :key="`recommendmovie-${movie.id}`">
-        <img :src="movie.post_url" alt="">
-      </div>
-    </div>
+    <router-link :to="`/UserRecommend/${user_id}`"> 추천리스트 보러가기 </router-link>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-
+// import Recommend from '@/components/Recommend'
 export default {
   name: 'userDetail',
   data() {
@@ -27,7 +20,9 @@ export default {
       user_id: this.$route.params.user_id,
     }
   },
-
+  components: {
+    // Recommend
+  },
   methods: {
     getUser() {
       const SERVER_IP = process.env.VUE_APP_SERVER_IP + `/movies/api/v1/userDetail/${this.user_id}/`; 

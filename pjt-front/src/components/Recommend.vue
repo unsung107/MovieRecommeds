@@ -1,20 +1,22 @@
 <template>
+<a data-toggle="collapse" :href="`#recommend-${recommend.id}`" role="button" aria-expanded="true" aria-controls="collapseExample">
   <div>
     <router-link :to="`/RecommendDetail/${recommend.id}`">
     {{ recommend.title }}
     </router-link>
     {{ recommend.discription }}
-    <span v-for="movie in recommend.movies" :key="movie.id">
-      <img class="movie--poster my-3" :src="movie.post_url" alt="">     
-    </span>
+    
     <button @click="goodRecommend(recommend.id)">좋아요</button>
     <hr>
+    <RecommendCollapse :recommend="recommend" />
   </div>
+  </a>
 </template>
 
 <script>
 import axios from 'axios'
 import jwtDecode from "jwt-decode";
+import RecommendCollapse from '@/components/RecommendCollapse'
 
 export default {
   name: 'Recommend',
@@ -24,7 +26,7 @@ export default {
     }
   },
   components: {
-
+    RecommendCollapse
   },
   props: {
     recommend: Object

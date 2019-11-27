@@ -1,7 +1,7 @@
 <template>
   <div>
     <Recommend v-for="recommend in recommends" :key="recommend.id" :recommend="recommend"/>
-    
+    <hr>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
     }
   },
   components: {
-    Recommend
+    Recommend,
   },
   methods: {
     getRecommend() {

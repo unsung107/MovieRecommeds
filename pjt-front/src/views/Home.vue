@@ -91,6 +91,9 @@ export default {
   },
   mounted() {},
   computed: {
+    token() {
+      return this.$session.get('jwt')
+    },
     movieList() {
       return this.movies;
     },

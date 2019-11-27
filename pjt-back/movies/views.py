@@ -306,7 +306,7 @@ def movieupdate(request):
                 snapshot_link = movie_naver_detail['items'][0]['link'].replace('basic', 'photoView')
                 video_link = movie_naver_detail['items'][0]['link'].replace('basic', 'media')
                 print(movieNm)
-                post_url = '../assets/base_poster.jpg'
+                post_url = './assets/base_poster.jpg'
                 
                 
                 userRating = movie_naver_detail['items'][0]['userRating']
@@ -381,7 +381,7 @@ def movieupdate(request):
 
                 for person in actors + directors:
                     peopleNm = person['peopleNm']
-                    img_url = '../assets/base_person.jpg'
+                    img_url = './assets/base_person.jpg'
 
                     if naver_movie:
                         img_tag = naver_movie.select_one(f'img[alt="{peopleNm}"]')
