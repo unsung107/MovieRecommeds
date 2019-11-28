@@ -15,10 +15,10 @@
           <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
         </router-link>
         {{ movie.title }}
-        <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
+        <i v-if="token " @click="goodMovie(movie.id)" class="fas fa-heart"></i>  
+        <i class="far fa-heart"></i>
       </span>
     </div>
-
   </div>
 </template>
 
