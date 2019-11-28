@@ -10,13 +10,14 @@
       <h3>{{ movie.title }}</h3>
       {{ movie.discription }}
     </div>
+    
     <!-- movie 평점 관객수 좋아요누른사람 -->
     <div class="d-inline-block">
       <h3>{{ movie.score }}</h3>
     </div>
     <div class="d-inline-block">
       {{ movie.audience }}
-      <i class="fas fa-heart fa-lg" style="color:red">좋아요</i>
+      <i @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
     </div>
     <div class="d-inline-block">
       <h3>좋아요누른사람</h3>
@@ -33,10 +34,11 @@
             :key="director.id"
             class="person--poster rounded-circle"
           />
+          </router-link>
           <br/>
           {{ director.name }}
-          <button v-if="token" @click="goodDirector(director.id)">좋아요</button>
-        </router-link>
+          <i @click="goodDirector(director.id, director)" :class="(director.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+        
       </span><hr>
       배우
       <span v-for="actor in movie.actors" :key="actor.id">
@@ -47,10 +49,11 @@
             :key="actor.id"
             class="person--poster rounded-circle"
           />
+          </router-link>
           <br />
           {{ actor.name }}
-          <button v-if="token" @click="goodActor(actor.id)">좋아요</button>
-        </router-link>
+          <i @click="goodActor(actor.id, actor)" :class="(actor.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+        
       </span>
     </div>
     <hr>
@@ -138,7 +141,7 @@ export default {
           this.loading = false;
         });
     },
-    goodMovie(movie_id) {
+    goodMovie(movie_id, movie) {
       axios
         .post(
           this.SERVER_IP + `/movies/likemovie/${movie_id}/${this.user_id}/`,
@@ -146,13 +149,17 @@ export default {
           this.options
         )
         .then(response => {
-          console.log(response);
+          if (response.data.liked) {
+            movie.liked_users.push(this.user_id)
+          } else{
+            movie.liked_users = movie.liked_users.filter(user => user !== this.user_id)
+          }
         })
         .catch(error => {
           console.log(error);
         });
     },
-    goodDirector(director_id) {
+    goodDirector(director_id,director) {
       axios
         .post(
           this.SERVER_IP +
@@ -161,13 +168,17 @@ export default {
           this.options
         )
         .then(response => {
-          console.log(response);
+          if (response.data.liked) {
+            director.liked_users.push(this.user_id)
+          } else{
+            director.liked_users = director.liked_users.filter(user => user !== this.user_id)
+          }
         })
         .catch(error => {
           console.log(error);
         });
     },
-    goodActor(actor_id) {
+    goodActor(actor_id, actor) {
       axios
         .post(
           this.SERVER_IP + `/movies/likeactor/${actor_id}/${this.user_id}/`,
@@ -175,7 +186,11 @@ export default {
           this.options
         )
         .then(response => {
-          console.log(response);
+          if (response.data.liked) {
+            actor.liked_users.push(this.user_id)
+          } else{
+            actor.liked_users = actor.liked_users.filter(user => user !== this.user_id)
+          }
         })
         .catch(error => {
           console.log(error);

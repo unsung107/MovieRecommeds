@@ -6,7 +6,7 @@
     </router-link>
     {{ recommend.discription }}
     
-    <button @click="goodRecommend(recommend.id)">좋아요</button>
+    <i @click="goodRecommend(recommend.id, recommend)" :class="(recommend.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
     <hr>
     <RecommendCollapse :recommend="recommend" />
   </div>
@@ -32,7 +32,7 @@ export default {
     recommend: Object
   },
   methods: {
-    goodRecommend(recommend_id) {
+    goodRecommend(recommend_id, recommend) {
       console.log(recommend_id)
       const SERVER_IP = process.env.VUE_APP_SERVER_IP;
       this.$session.start()
@@ -46,7 +46,11 @@ export default {
       
       axios.post(SERVER_IP + `/movies/likerecommend/${recommend_id}/${user_id}/`, {} ,options)
         .then(response => {
-          console.log(response)
+          if (response.data.liked) {
+            recommend.liked_users.push(this.user_id)
+          } else{
+            recommend.liked_users = recommend.liked_users.filter(user => user !== this.user_id)
+          }
         })
         .catch(error => {
           console.log(error);

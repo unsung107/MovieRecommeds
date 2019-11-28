@@ -6,17 +6,19 @@ User = get_user_model()
 
 class ActorSerializer(serializers.ModelSerializer):
     movies = serializers.PrimaryKeyRelatedField(queryset=Movie.objects.all(), many=True)
+    liked_users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
 
     class Meta:
         model = Actor
-        fields = ('id', 'name', 'image_url', 'movies',)
+        fields = ('id', 'name', 'image_url', 'movies', 'liked_users',)
 
 class DirectorSerializer(serializers.ModelSerializer):
     movies = serializers.PrimaryKeyRelatedField(queryset=Movie.objects.all(), many=True)
+    liked_users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
 
     class Meta:
         model = Director
-        fields = ('id', 'name', 'image_url', 'movies',)
+        fields = ('id', 'name', 'image_url', 'movies', 'liked_users',)
 
 class ReviewSerializer(serializers.ModelSerializer):
     
@@ -34,10 +36,11 @@ class MovieSerializer(serializers.ModelSerializer):
     actors = ActorSerializer(many=True)
     directors = DirectorSerializer(many=True)
     reviews = ReviewSerializer(many=True)
+    liked_users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
     
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'discription', 'post_url', 'audience', 'watch_grade_name', 'actors', 'directors', 'reviews', 'video_url', 'snapshot_url', 'score', )
+        fields = ('id', 'title', 'discription', 'post_url', 'audience', 'watch_grade_name', 'actors', 'directors', 'reviews', 'video_url', 'snapshot_url', 'score', 'liked_users', )
 
 class GenreSerializer(serializers.ModelSerializer):
     movies = MovieSerializer(many=True)
@@ -56,9 +59,10 @@ class RecommendSerializer(serializers.ModelSerializer):
     movies = MovieSerializer(many=True)
     moviecomments = MovieCommentSerializer(many=True)
     recommend_reviews = RecommendReviewSerializer(many=True)
+    liked_users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
     class Meta:
         model = Recommend
-        fields = ('user', 'title', 'discription', 'movies', 'moviecomments', 'id', 'recommend_reviews', )
+        fields = ('user', 'title', 'discription', 'movies', 'moviecomments', 'id', 'recommend_reviews', 'liked_users',)
 
 class CommingMovieSerializer(serializers.ModelSerializer):
     liked_users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
