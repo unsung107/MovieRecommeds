@@ -58,9 +58,9 @@
             
             if (res.data.age) {
                 // 성공적으로 회원가입이 되었을 경우
-              this.$router.push({ name: 'home' })
+              this.$router.push({ name: 'login' })
             // } else {
-            //   this.$router.push({ name: 'signup' })
+              // this.$router.push({ name: 'signup' })
             } else {
               this.errors.push(res.data)
               console.log(this.errors[0])

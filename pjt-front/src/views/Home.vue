@@ -21,7 +21,7 @@
           <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
         </router-link>
         {{ movie.title }}
-        <i @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+        <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
       </span>
     </div>
   </div>
@@ -51,6 +51,7 @@ export default {
         .get(SERVER_IP + `/movies/api/v1/${genre_id}/`)
         .then(response => {
           this.movies = response.data.movies;
+          console.log(response)
         })
         .catch(error => {
           console.error(error);
@@ -119,5 +120,7 @@ export default {
 <style>
 .btn-outline-info {
   margin-right: 5px;
+  position: relative;
+	width: 10%;
 }
 </style>
