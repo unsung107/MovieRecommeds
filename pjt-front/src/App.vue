@@ -8,23 +8,22 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-          <router-link class="nav_word" to="/RecommendList">추천리스트</router-link>
+          <router-link to="/RecommendList">추천리스트</router-link>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
         <b-nav-form v-if="isLoggedIn">
-          <router-link v-if="user_id === 1" to="/adminPage">admin</router-link> | 
-          <a @click.prevent="logout" href="/logout">Logout</a> |
+          <router-link v-if="user_id === 1" to="/adminPage">admin |    </router-link>
+          <a @click.prevent="logout" href="/logout"> |  Logout  |</a>
           <router-link to="/createRecommend">추천리스트 작성</router-link> | 
           <router-link :to="`/userDetail/${user_id}`">마이페이지</router-link> | 
           <router-link :to="`/MovieForYou`">MovieForYou</router-link> | 
 
         </b-nav-form>
         <b-nav-form v-else>
-           | 
-          <router-link to="/login" @login="checkLoggedIn">Login</router-link> | 
-          <router-link to="/signup">Signup</router-link> | 
+          <router-link to="/login" @login="checkLoggedIn">Login</router-link>    
+          <router-link to="/signup">Signup</router-link>
         </b-nav-form>
       </b-navbar-nav>
     </b-collapse>
@@ -94,6 +93,10 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#nav-collapse {
+  color: white;
 }
 
 </style>
