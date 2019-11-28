@@ -1,10 +1,12 @@
 <template>
   <div>
+  <a :href="actor.image_url">
     <img :src="actor.image_url" alt="">
+    </a>
     {{actor.name}}
     
     <div class="row">
-    <span v-for="movie in actor.movies" :key="movie.id" class="card col-3">
+    <span v-for="movie in actor.movies" :key="movie.id" class="border-0 card col-3">
       <router-link :to="`/movie/${movie.id}`">
       <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title"><br>
       {{ movie.title }}

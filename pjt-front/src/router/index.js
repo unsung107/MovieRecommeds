@@ -13,6 +13,7 @@ import RecommendList from '@/views/RecommendList'
 import UserDetail from '@/views/UserDetail'
 import RecommendDetail from '@/views/RecommendDetail'
 import MovieForYou from '@/views/MovieForYou'
+import MovieUpdate from '@/views/MovieUpdate'
 
 Vue.use(VueRouter)
 
@@ -81,6 +82,11 @@ const routes = [
     path: '/MovieForYou',
     name: 'MovieForYou',
     component: MovieForYou
+  },
+  {
+    path: '/MovieUpdate/:movie_id',
+    name: 'MovieUpdate',
+    component: MovieUpdate
   },
   
 ]

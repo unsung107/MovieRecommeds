@@ -498,11 +498,12 @@ def giveMovieInfo(request, movie_id):
     reviews = [{'id': review['id'], 'user_id': review['user'],'username': get_object_or_404(User, pk=review['user']).username,'score': review['score'], 'content': review['content']} for review in reviews]
     result['reviews'] = reviews
     result['liked_users_info'] = []
-    pprint(result)
     for liked_user in result['liked_users']:
         liked_user = get_object_or_404(User, pk=liked_user)
         serializer = UserSerializer(instance=liked_user)
         result['liked_users_info'].append(serializer.data)
+    
+
     return JsonResponse(result)
 
 def giveActorInfo(request, actor_id):
@@ -740,3 +741,26 @@ def likerecommend(request, recommend_id, user_id):
         liked = True
     context = {'liked': liked, 'count': recommend.liked_users.count()}
     return JsonResponse(context)
+
+@api_view(['GET', 'POSt'])
+def updateMovie(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    print(request.POST)
+    if request.method == 'POST':
+        serializer = MovieSerializer(request.POST, instance=movie)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=200)
+    serializer = MovieSerializer(instance=movie)
+    pprint(serializer.data)
+    context = {
+        'form':serializer.data
+    }
+    return JsonResponse(context)
+
+@api_view(['POSt'])
+def deleteMovie(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    movie.delete()
+    return Response(status=204)
+    

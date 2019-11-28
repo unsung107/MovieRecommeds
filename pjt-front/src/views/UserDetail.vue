@@ -2,29 +2,43 @@
   <div>
     {{ userInfo.username }}
     {{userInfo.birthday}}
-    <router-link :to="`/UserRecommend/${user_id}`"> {{userInfo.username}} 님의 추천리스트 보러가기 </router-link>
     <br>
-    <span v-for="movie in userInfo.like_movies" :key="`movie-${movie.id}`"> 
-      {{movie.title}}
-    </span>
+    <router-link :to="`/UserRecommend/${user_id}`"> {{userInfo.username}} 님이 추천하는 영화 </router-link>
     <hr>
-    내가 좋아하는 배우
     <br>
-    <span v-for="actor in userInfo.like_actors" :key="actor.id">
+    {{userInfo.username}} 님이 좋아하는 영화
+    <br>
+     <br>
+    <div v-for="movie in userInfo.like_movies" :key="`movie-${movie.id}`" class="d-inline-block mr-5"> 
+    <router-link :to="`/movie/${movie.id}`">
+        <img
+          :src="movie.post_url"
+          :alt="movie.title"
+          :key="movie.id"
+          class="person--poster rounded-circle"
+        /></router-link>
+      {{movie.title}}
+    </div>
+    <hr>
+    {{userInfo.username}} 님이 좋아하는 배우
+    <br>
+ <br>
+    <div v-for="actor in userInfo.like_actors" :key="actor.id" class="d-inline-block mr-5">
       <router-link :to="`/actor/${actor.id}`">
         <img
           :src="actor.image_url"
           :alt="actor.name"
           :key="actor.id"
           class="person--poster rounded-circle"
-        />
+        /></router-link>
+        <br>
         {{ actor.name }}
-      </router-link>
-    </span>
+      
+    </div>
     <hr>
-    내가 좋아하는 감독
+    {{userInfo.username}} 님이 좋아하는 감독
     <br>
-    <span v-for="director in userInfo.like_directors" :key="director.id">
+    <div v-for="director in userInfo.like_directors" :key="director.id" class="d-inline-block mr-5">
       <router-link :to="`/director/${director.id}`">
         <img
           :src="director.image_url"
@@ -32,9 +46,10 @@
           :key="director.id"
           class="person--poster rounded-circle"
         />
+        <br></router-link>
         {{ director.name }}
-      </router-link>
-    </span>
+      
+    </div>
     
   </div>
 </template>
