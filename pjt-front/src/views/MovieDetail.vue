@@ -55,7 +55,7 @@
       <div class="row">
       <span class="border-0 card col-2 my-3" v-for="actor in movie.actors" :key="actor.id">
         <router-link :to="`/actor/${actor.id}`">
-          
+
           <img
             :src="actor.image_url"
             :alt="actor.name"
