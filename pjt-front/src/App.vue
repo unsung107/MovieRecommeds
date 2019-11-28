@@ -14,8 +14,8 @@
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
         <b-nav-form v-if="isLoggedIn">
-          <router-link v-if="user_id === 1" to="/adminPage">admin</router-link> | 
-          <a @click.prevent="logout" href="/logout">Logout</a> |
+          <router-link v-if="user_id === 1" to="/adminPage">admin |    </router-link>
+          <a @click.prevent="logout" href="/logout"> |  Logout  |</a>
           <router-link to="/createRecommend">추천리스트 작성</router-link> | 
           <router-link :to="`/userDetail/${user_id}`">마이페이지</router-link> | 
           <router-link :to="`/MovieForYou`">MovieForYou</router-link> | 
