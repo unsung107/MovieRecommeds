@@ -306,7 +306,7 @@ def movieupdate(request):
                 snapshot_link = movie_naver_detail['items'][0]['link'].replace('basic', 'photoView')
                 video_link = movie_naver_detail['items'][0]['link'].replace('basic', 'media')
                 print(movieNm)
-                post_url = '@/assets/base_poster.jpg'
+                post_url = 'https://ssl.pstatic.net/static/movie/2012/06/dft_img111x139.png'
                 
                 
                 userRating = movie_naver_detail['items'][0]['userRating']
@@ -381,7 +381,7 @@ def movieupdate(request):
 
                 for person in actors + directors:
                     peopleNm = person['peopleNm']
-                    img_url = '@/assets/base_person.jpg'
+                    img_url = 'https://ssl.pstatic.net/static/movie/2012/06/dft_img111x139.png'
 
                     if naver_movie:
                         img_tag = naver_movie.select_one(f'img[alt="{peopleNm}"]')
@@ -489,6 +489,13 @@ def giveMovieInfo(request, movie_id):
     reviews = result['reviews']
     reviews = [{'id': review['id'], 'user_id': review['user'],'username': get_object_or_404(User, pk=review['user']).username,'score': review['score'], 'content': review['content']} for review in reviews]
     result['reviews'] = reviews
+    result['liked_users_info'] = []
+    
+    for liked_user in result['liked_users']:
+        liked_user = get_object_or_404(User, pk=liked_user)
+        serializer = UserSerializer(instance=liked_user)
+        result['liked_users_info'].append(serializer.data)
+    pprint(result['liked_users_info'][0])
     return JsonResponse(result)
 
 def giveActorInfo(request, actor_id):

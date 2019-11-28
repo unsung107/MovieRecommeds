@@ -7,28 +7,28 @@
     <!-- movie title discription -->
     <div class="d-inline-block" style="width:70%">
       <!-- {{ movie }} -->
-      <h3>{{ movie.title }}</h3>
+      <h3>{{ movie.title }} <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users && movie.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"></i></h3>
       {{ movie.discription }}
     </div>
-    
+    <div class="ml-5 d-inline-block" style="width: 250px; text-align: center">
+      <h6>평점: {{ movie.score }} 관객수: {{ movie.audience }}</h6>
+
+    </div>
+    <div class="d-inline-block">
+      이 영화를 좋아하는 사람들 |
+      <span v-for="user in movie.liked_users_info" :key="`user-${user.id}`">
+      <router-link :to="`/UserDetail/${user.id}`">
+      {{ user.username }}
+      </router-link>
+      </span>
+    </div>    
+    <hr>
     <!-- movie 평점 관객수 좋아요누른사람 -->
-    <div class="d-inline-block">
-      <h6>평점: {{ movie.score }}</h6>
-    </div>
-    <div class="d-inline-block">
-      {{ movie.audience }}
-<<<<<<< HEAD
-      <i @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
-=======
-      <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
->>>>>>> b3e6564161ffc457a7eff20ca2cc8d08cdf1656d
-    </div>
-    <div class="d-inline-block">
-      <h3>좋아요누른사람for문돌리면서 이름뽑기</h3>
-    </div>
+
+
     <!-- 감독, 배우 -->
+    <h2>감독</h2>
     <div class="row">
-      감독
       <span v-for="director in movie.directors" :key="director.id">
         <router-link :to="`/director/${director.id}`">
           <br />
@@ -41,10 +41,13 @@
           </router-link>
           <br/>
           {{ director.name }}
-          <i v-if="token" @click="goodDirector(director.id, director)" :class="(director.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+          <i v-if="token" @click="goodDirector(director.id, director)" :class="(director.liked_users && director.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"></i>
         
-      </span><hr>
-      배우
+      </span>
+      </div>
+      <hr>
+      <h2>배우</h2>
+      <div class="row">
       <span v-for="actor in movie.actors" :key="actor.id">
         <router-link :to="`/actor/${actor.id}`">
           <img
@@ -56,7 +59,7 @@
           </router-link>
           <br />
           {{ actor.name }}
-          <i v-if="token" @click="goodActor(actor.id, actor)" :class="(actor.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+          <i v-if="token" @click="goodActor(actor.id, actor)" :class="(actor.liked_users && actor.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"></i>
         
       </span>
     </div>

@@ -21,7 +21,7 @@
           <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
         </router-link>
         {{ movie.title }}
-        <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+        <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users && movie.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"></i>
       </span>
     </div>
   </div>

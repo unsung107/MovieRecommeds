@@ -4,26 +4,33 @@
     {{recommend.title}}
     {{recommend.discription}}
     {{recommend.user}}
-    <button v-if="token" @click="goodRecommend(recommend.id)">좋아요</button><br>
+    <i
+      v-if="token"
+      @click="goodRecommend(recommend.id, recommend)"
+      :class="(recommend.liked_users && recommend.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"
+    ></i>
+    <br />
     <span>
-      <movieInRecommend :movie="recommend.movies[0]" :moviecomment="recommend.moviecomments[0]"/>
+      <movieInRecommend :movie="recommend.movies[0]" :moviecomment="recommend.moviecomments[0]" />
     </span>
-    <hr>
-    <span
-      v-for="idx in recommend.movies.length - 1"
-      :key="`movieinrecommend-${idx}`"
-    >
-      <movieInRecommend :movie="recommend.movies[idx]" :moviecomment="recommend.moviecomments[idx]"/>
-      <hr>
-    </span>
-
+    <hr />
+    <div v-if="recommend.movies.length > 1">
+      <span v-for="idx in recommend.movies.length - 1" :key="`movieinrecommend-${idx}`">
+        <movieInRecommend
+          :movie="recommend.movies[idx]"
+          :moviecomment="recommend.moviecomments[idx]"
+        />
+        <hr />
+      </span>
+    </div>
     <div v-if="token">
       <input type="text" v-model="review.content" />
       <button @click="createReview">작성</button>
     </div>
     <div>
       <span v-for="review in recommend_reviews" :key="review.id">
-        <router-link :to="`/UserDetail/${review.user}`">{{review.username}}</router-link> : {{review.content}} {{review.id}}
+        <router-link :to="`/UserDetail/${review.user}`">{{review.username}}</router-link>
+        : {{review.content}} {{review.id}}
         <button
           v-if="token && user_id === review.user_id"
           @click="deleteReview(review.id)"
@@ -36,9 +43,9 @@
 
 <script>
 import axios from "axios";
-import jwtDecode from 'jwt-decode'
-import router from "@/router"
-import movieInRecommend from '@/components/movieInRecommend'
+import jwtDecode from "jwt-decode";
+import router from "@/router";
+import movieInRecommend from "@/components/movieInRecommend";
 
 export default {
   name: "RecommendDetail",
@@ -48,7 +55,7 @@ export default {
       recommend: {},
       token: this.$session.get("jwt"),
       review: {
-        content: "",
+        content: ""
       },
       recommend_reviews: [],
       SERVER_IP: process.env.VUE_APP_SERVER_IP
@@ -71,45 +78,74 @@ export default {
   },
   methods: {
     getRecommend() {
-      axios.get(this.SERVER_IP + `/movies/api/v1/recommendDetail/${this.recommend_id}`).then(response => {
-        this.recommend = response.data;
-        this.recommend_reviews = this.recommend.recommend_reviews
-      });
+      axios
+        .get(
+          this.SERVER_IP + `/movies/api/v1/recommendDetail/${this.recommend_id}`
+        )
+        .then(response => {
+          this.recommend = response.data;
+          this.recommend_reviews = this.recommend.recommend_reviews;
+        });
     },
     createReview() {
       axios
-        .post(this.SERVER_IP + `/movies/api/v1/createRecommendReview/${this.user_id}/${this.recommend_id}/`, this.review, this.options)
+        .post(
+          this.SERVER_IP +
+            `/movies/api/v1/createRecommendReview/${this.user_id}/${this.recommend_id}/`,
+          this.review,
+          this.options
+        )
         .then(response => {
-          this.recommend_reviews.push(response.data)
-        })
+          this.recommend_reviews.push(response.data);
+        });
     },
     deleteReview(review_id) {
-      axios.post(this.SERVER_IP + `/movies/api/v1/deleteRecommendReview/${review_id}/`, {}, this.options)
-      .then(response => {
-        console.log(response)
-        this.recommend_reviews = this.recommend_reviews.filter(review => review.id != review_id)
-      })
-    },
-    goodRecommend(recommend_id) {
       axios
         .post(
-          this.SERVER_IP + `/movies/likerecommend/${recommend_id}/${this.user_id}/`,
+          this.SERVER_IP + `/movies/api/v1/deleteRecommendReview/${review_id}/`,
           {},
           this.options
         )
         .then(response => {
           console.log(response);
+          this.recommend_reviews = this.recommend_reviews.filter(
+            review => review.id != review_id
+          );
+        });
+    },
+    goodRecommend(recommend_id, recommend) {
+      axios
+        .post(
+          this.SERVER_IP +
+            `/movies/likerecommend/${recommend_id}/${this.user_id}/`,
+          {},
+          this.options
+        )
+        .then(response => {
+          if (response.data.liked) {
+            recommend.liked_users.push(this.user_id);
+          } else {
+            recommend.liked_users = recommend.liked_users.filter(
+              user => user !== this.user_id
+            );
+          }
         })
         .catch(error => {
           console.log(error);
         });
     },
     deleteRecommend() {
-      axios.post(this.SERVER_IP + `/movies/api/v1/deleteRecommend/${this.recommend_id}/`, {}, this.options)
-    .then(response => {
-      response
-      router.push('/RecommendList')
-    })
+      axios
+        .post(
+          this.SERVER_IP +
+            `/movies/api/v1/deleteRecommend/${this.recommend_id}/`,
+          {},
+          this.options
+        )
+        .then(response => {
+          response;
+          router.push("/RecommendList");
+        });
     }
   },
   mounted() {

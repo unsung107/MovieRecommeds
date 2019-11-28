@@ -1,12 +1,11 @@
 <template>
-<a data-toggle="collapse" :href="`#recommend-${recommend.id}`" role="button" aria-expanded="true" aria-controls="collapseExample">
+<a data-toggle="collapse" :href="`#recommend-${recommend.id}`" role="button" aria-expanded="false" aria-controls="collapseExample">
   <div>
     <router-link :to="`/RecommendDetail/${recommend.id}`">
     {{ recommend.title }}
     </router-link>
     {{ recommend.discription }}
     
-    <i @click="goodRecommend(recommend.id, recommend)" :class="(recommend.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
     <hr>
     <RecommendCollapse :recommend="recommend" />
   </div>
@@ -30,6 +29,14 @@ export default {
   },
   props: {
     recommend: Object
+  },
+  computed: {
+    token() {
+      return this.$session.get('jwt')
+    },
+    user_id() {
+      return jwtDecode(this.token).user_id;
+    }
   },
   methods: {
     goodRecommend(recommend_id, recommend) {

@@ -81,4 +81,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'birthday', 'age', 'like_movies', 'like_genres', 'like_directors', 'like_actors', 'like_commingmovies', 'like_recommends', 'recommends',)
+        fields = ('id', 'username', 'birthday', 'age', 'like_movies', 'like_genres', 'like_directors', 'like_actors', 'like_commingmovies', 'like_recommends', 'recommends',)
