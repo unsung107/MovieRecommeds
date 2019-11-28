@@ -9,9 +9,11 @@
     <br /><br />
 
     <!-- search bar -->
-    <form class="form-inline md-form form-sm mt-0">
+    <form class="form-inline md-form form-sm mt-0 search-box">
+      <div class="searchWrap">
       <i class="fas fa-search" aria-hidden="true"></i>
-      <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search" v-model="searchKey" @input="searching(searchKey)">
+      <input class="search-box-inner form-control form-control-sm w-75" type="text" placeholder="Search" aria-label="Search" v-model="searchKey" @input="searching(searchKey)">
+      </div>
     </form>
 
 
@@ -127,4 +129,10 @@ container {
   position: relative;
   margin: 0 auto;
 }
+
+.search-box { text-align: center; }
+.fas {padding: 5px; }
+.searchWrap { width: 530px; margin: 0 auto; }
+
+
 </style>
