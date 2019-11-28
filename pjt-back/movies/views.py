@@ -238,7 +238,7 @@ def movieupdate(request):
     }
     NAVER_BASE_URL = config('NAVER_BASE_URL')
 
-    for week_ago in range(4,6):
+    for week_ago in range(5,50):
         print(week_ago)
         targetDt = datetime.date.today() - datetime.timedelta(weeks=week_ago)
         targetDt = targetDt.strftime('%Y%m%d')
@@ -271,7 +271,6 @@ def movieupdate(request):
                         temp_genre = get_object_or_404(Genre, name=f'{genreNm}')
                         genre['id'] = temp_genre.id
                         continue
-                kmdb = requests.get(KMDB_BASE_URL + KMDB_API_KEY + 'title=' + movieNm).json()
                 directors = movie_info['directors']
                 actors = movie_info['actors']
                 # [{'peopleNm' : '조진웅'}, {}]
@@ -460,10 +459,19 @@ def movieupdate(request):
     return JsonResponse(context)
 
 def homemovielist(request, genre_id):
+    if genre_id:
+        genre = get_object_or_404(Genre, pk=genre_id)
+        serializer = GenreSerializer(instance=genre)
+        result = serializer.data
+    else:
+        result = {'movies': []}
+        for idx in range(1, 29):
+            movie = get_object_or_404(Movie, pk=idx)
+            serializer = MovieSerializer(instance=movie)
+            result['movies'].append(serializer.data)
+
     
-    genre = get_object_or_404(Genre, pk=genre_id)
-    serializer = GenreSerializer(instance=genre)
-    return JsonResponse(serializer.data)
+    return JsonResponse(result)
 
 def searchMovie(request, movie_nm):
     if movie_nm == ' ':

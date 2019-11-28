@@ -1,10 +1,11 @@
 <template>
     <div class="container">
-      <button type="button" class="btn btn-outline-info" @click="getMovie(1)">   범죄   </button>
-      <button type="button" class="btn btn-outline-info" @click="getMovie(2)">  드라마  </button>
-      <button type="button" class="btn btn-outline-info" @click="getMovie(3)">   액션   </button>
-      <button type="button" class="btn btn-outline-info" @click="getMovie(5)">    SF    </button>
-      <button type="button" class="btn btn-outline-info" @click="getMovie(11)">  판타지  </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(0)">   최신   </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(1)">   애니메이션   </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(2)">  범죄  </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(3)">   드라마   </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(5)">    어드벤처    </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(10)">  코미디  </button>
     <br /><br />
 
     <!-- search bar -->
@@ -50,7 +51,6 @@ export default {
         .get(SERVER_IP + `/movies/api/v1/${genre_id}/`)
         .then(response => {
           this.movies = response.data.movies;
-          console.log(response)
         })
         .catch(error => {
           console.error(error);
@@ -110,8 +110,8 @@ export default {
       return jwtDecode(this.token).user_id;
     }
   },
-  updated() {
-
+  mounted() {
+    this.getMovie(0)
   },
 };
 </script>
