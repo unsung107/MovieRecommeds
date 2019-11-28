@@ -1,28 +1,35 @@
 <template>
   <div class="container">
     <div>
-      title :
-      <input type="text" v-model="creationFrom.title" />
-      <br />discription :
-      <textarea type="text" class="col-7 row-5"  v-model="creationFrom.discription" row="4" />
-      <br />
+      title : 
+      <input type="text" v-model="creationFrom.title" placeholder=" 비오는 날 보기 좋은 영화"/>
+      <br /><br />
+      discription :
+      <textarea type="text" class="col-7 row-5"  v-model="creationFrom.discription" row="4" placeholder="비오는날 보기 좋은 영화 목록입니다~" style=""/>
+      <br /><br />
       <button class="btn btn-primary" data-toggle="modal" data-target="#find_movie">영화 추가하기</button>
       <AddMovieInRecommendModal @selectMovie="modalAddMovie" />
       <hr />
       <div v-if="selectedMovie.id">
-        <img :src="selectedMovie.post_url" alt class="movie--poster" />
-        <input type="text" v-model="makingMovieComment" />
+        <img :src="selectedMovie.post_url" alt class="movie--poster" /><br><br>
+        <textarea type="text" v-model="makingMovieComment" class="col-5 row-5" />
         <button class="btn btn-secondary" @click="addMovie(selectedMovie)">등록</button>
       </div>
       <div>
-        <span v-for="addedMovie in creationFrom.movies" :key="addedMovie.id">
-          {{addedMovie.movie.title}}
-          <img class="movie--poster" :src="addedMovie.movie.post_url" />
-          {{addedMovie.movieComment}}
+        
+        <div v-for="addedMovie in creationFrom.movies" :key="addedMovie.id">
+          <div class="d-inline-block" style="width:50%">
+            <img class="movie--poster mr-0" style="width:180px height:250px" :src="addedMovie.movie.post_url"/>
+          </div>
+          <div class="d-inline-block" style="width:50%">
+            {{addedMovie.movie.title}} <br>
+            {{addedMovie.movieComment}}
           <br />
-        </span>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-secondary" @click="createRecommend">제출하기</button>
+      <br>
+      <button class="btn btn-secondary" @click="createRecommend">추천리스트 만들기</button>
     </div>
   </div>
 </template>
