@@ -17,7 +17,7 @@
     </div>
     <div class="d-inline-block">
       {{ movie.audience }}
-      <i @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+      <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
     </div>
     <div class="d-inline-block">
       <h3>좋아요누른사람for문돌리면서 이름뽑기</h3>
@@ -37,7 +37,7 @@
           </router-link>
           <br/>
           {{ director.name }}
-          <i @click="goodDirector(director.id, director)" :class="(director.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+          <i v-if="token" @click="goodDirector(director.id, director)" :class="(director.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
         
       </span><hr>
       배우
@@ -52,7 +52,7 @@
           </router-link>
           <br />
           {{ actor.name }}
-          <i @click="goodActor(actor.id, actor)" :class="(actor.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+          <i v-if="token" @click="goodActor(actor.id, actor)" :class="(actor.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
         
       </span>
     </div>
