@@ -23,6 +23,8 @@ urlpatterns = [
     path('api/v1/deleteRevieReview/<int:review_id>/', views.deleteRevieReview, name='deleteRevieReview'),
     path('api/v1/createRecommendReview/<int:user_id>/<int:recommend_id>/', views.createRecommendReview, name='createRecommendReview'),
     path('api/v1/deleteRecommendReview/<int:review_id>/', views.deleteRecommendReview, name='deleteRecommendReview'),
+    path('api/v1/updateMovie/<int:movie_id>/', views.updateMovie, name='updateMovie'),
+    path('api/v1/deleteMovie/<int:movie_id>/', views.deleteMovie, name='deleteMovie'),
 
     path('api/v1/recommendList/<int:user_id>/', views.recommendList, name='recommendList'),
 

@@ -199,6 +199,11 @@
       </div>
            
     </div>
+    <span v-if="user_id === 1">
+    <router-link :to="`/MovieUpdate/${movie.id}`">
+    영화수정하기
+    </router-link>
+    </span>
   </div>
 </template>
 <script>

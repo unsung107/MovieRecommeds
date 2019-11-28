@@ -1,5 +1,5 @@
 from django import forms
-from .models import Recommend, Review, RecommendReview
+from .models import Recommend, Review, RecommendReview, Movie
 
 class RecommendCreationForm(forms.ModelForm):
 
