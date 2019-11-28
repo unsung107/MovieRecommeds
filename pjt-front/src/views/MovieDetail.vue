@@ -2,7 +2,7 @@
   <div class="container">
     <!-- movie poster -->
     <div class="d-inline-block" style="width:30%">
-      <img class="movie--poster my-3" :src="movie.post_url" alt />
+      <a :href="movie.post_url"><img class="movie--poster my-3" :src="movie.post_url" alt /></a>
     </div>
     <!-- movie title discription -->
     <div class="d-inline-block" style="width:70%">
@@ -14,13 +14,15 @@
       <h6>평점: {{ movie.score }} 관객수: {{ movie.audience }}</h6>
 
     </div>
-    <div class="d-inline-block">
-      이 영화를 좋아하는 사람들 |
+    <div>
+      <a data-toggle="collapse" :href="`#user-collapse`" role="button" aria-expanded="false" aria-controls="collapseExample">이 영화를 좋아하는 사람들 </a>
+      <div class="collapse" id="user-collapse">
       <span v-for="user in movie.liked_users_info" :key="`user-${user.id}`">
       <router-link :to="`/UserDetail/${user.id}`">
       {{ user.username }}
       </router-link>
       </span>
+      </div>
     </div>    
     <hr>
     <!-- movie 평점 관객수 좋아요누른사람 -->
@@ -29,7 +31,7 @@
     <!-- 감독, 배우 -->
     <h2>감독</h2>
     <div class="row">
-      <span v-for="director in movie.directors" :key="director.id">
+      <span class="border-0 card col-2 my-3" v-for="director in movie.directors" :key="director.id">
         <router-link :to="`/director/${director.id}`">
           <br />
           <img
@@ -48,8 +50,9 @@
       <hr>
       <h2>배우</h2>
       <div class="row">
-      <span v-for="actor in movie.actors" :key="actor.id">
+      <span class="border-0 card col-2 my-3" v-for="actor in movie.actors" :key="actor.id">
         <router-link :to="`/actor/${actor.id}`">
+          
           <img
             :src="actor.image_url"
             :alt="actor.name"
@@ -57,6 +60,10 @@
             class="person--poster rounded-circle"
           />
           </router-link>
+          <a data-toggle="collapse" :href="`#actor-${actor.id}`" role="button" aria-expanded="false" aria-controls="collapseExample">
+            영화보기
+          </a>
+          <ActorCollapse :actor="actor" />
           <br />
           {{ actor.name }}
           <i v-if="token" @click="goodActor(actor.id, actor)" :class="(actor.liked_users && actor.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"></i>
@@ -73,12 +80,13 @@
     <div style="width:80%" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li v-for="idx in movie.snapshot_url.length" :key="idx" data-target="#carouselExampleIndicators" :data-slide-to="idx"></li>
+        <li v-for="idx in movie.snapshot_url.length - 1" :key="idx" data-target="#carouselExampleIndicators" :data-slide-to="idx"></li>
       </ol>
         <div class="carousel-inner">
         <div class="carousel-item active">
           <img class="d-block w-100" :src="movie.snapshot_url[0]" alt="First slide">
         </div>
+        
         <div v-for="idx in movie.snapshot_url.length - 1" :key="`snapshot-${idx}`" class="carousel-item">
           <img class="d-block w-100" :src="movie.snapshot_url[idx]" alt="Second slide">
         </div>
@@ -111,8 +119,13 @@
 <script>
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import ActorCollapse from "@/components/ActorCollapse";
+
 export default {
   name: "detail",
+  components: {
+    ActorCollapse
+  },
   data() {
     return {
       movie: {},

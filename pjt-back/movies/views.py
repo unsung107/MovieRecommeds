@@ -238,14 +238,13 @@ def movieupdate(request):
     }
     NAVER_BASE_URL = config('NAVER_BASE_URL')
 
-    for week_ago in range(1, 2):
+    for week_ago in range(4,6):
         print(week_ago)
         targetDt = datetime.date.today() - datetime.timedelta(weeks=week_ago)
         targetDt = targetDt.strftime('%Y%m%d')
         api_url =f'{BASE_URL}boxoffice/searchWeeklyBoxOfficeList.json?key={key}&targetDt={targetDt}'
 
         response = requests.get(api_url).json()['boxOfficeResult']['weeklyBoxOfficeList']
-        
         for movie in response:
             try:
                 movieCd = movie['movieCd']
@@ -272,7 +271,7 @@ def movieupdate(request):
                         temp_genre = get_object_or_404(Genre, name=f'{genreNm}')
                         genre['id'] = temp_genre.id
                         continue
-
+                kmdb = requests.get(KMDB_BASE_URL + KMDB_API_KEY + 'title=' + movieNm).json()
                 directors = movie_info['directors']
                 actors = movie_info['actors']
                 # [{'peopleNm' : '조진웅'}, {}]
@@ -450,6 +449,7 @@ def movieupdate(request):
                     target_genre = get_object_or_404(Genre, pk=genre['id'])
                     temp_movie.genres.add(target_genre)
             except:
+                print('error')
                 continue
 
 
@@ -490,12 +490,12 @@ def giveMovieInfo(request, movie_id):
     reviews = [{'id': review['id'], 'user_id': review['user'],'username': get_object_or_404(User, pk=review['user']).username,'score': review['score'], 'content': review['content']} for review in reviews]
     result['reviews'] = reviews
     result['liked_users_info'] = []
-    
+    pprint(result)
     for liked_user in result['liked_users']:
         liked_user = get_object_or_404(User, pk=liked_user)
         serializer = UserSerializer(instance=liked_user)
         result['liked_users_info'].append(serializer.data)
-    pprint(result['liked_users_info'][0])
+    
     return JsonResponse(result)
 
 def giveActorInfo(request, actor_id):

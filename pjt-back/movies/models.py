@@ -17,6 +17,7 @@ class Movie(models.Model):
     score = models.FloatField()
     video_url = models.TextField()
     snapshot_url = models.TextField()
+
     genres = models.ManyToManyField(Genre, related_name='movies')
     
 

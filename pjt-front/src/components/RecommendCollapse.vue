@@ -1,5 +1,5 @@
 <template>
-  <div :id="`recommend-${recommend.id}`">
+  <div class="collapse" :id="`recommend-${recommend.id}`">
     <span v-for="movie in recommend.movies" :key="movie.id">
       <img class="movie--poster my-3" :src="movie.post_url" alt="">     
     </span>

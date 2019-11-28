@@ -15,12 +15,12 @@
 
       <div class="form-group">
         <label for="id">ID </label>
-        <input type="text" id="id" placeholder="아이디를 입력해주세요" v-model="credentials.username">
+        <input type="text" class="form-control" id="id" placeholder="아이디를 입력해주세요" v-model="credentials.username">
       </div>
 
       <div class="form-group">
         <label for="password">password</label>
-        <input type="password" id="password" placeholder="비밀번호를 입력해주세요" v-model="credentials.password">
+        <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력해주세요" v-model="credentials.password">
       </div>
 
       <div>
