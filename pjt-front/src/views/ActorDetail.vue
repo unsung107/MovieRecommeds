@@ -1,14 +1,15 @@
 <template>
   <div>
-  <a :href="actor.image_url">
-    <img :src="actor.image_url" alt="">
-    </a>
-    {{actor.name}}
-    
+  
+    <span :href="actor.image_url">
+      <h4 class="actordetail" >{{actor.name}}</h4><br><br>
+      <img :src="actor.image_url" alt="">
+    </span><br>
+    <br><br> <br><br>
     <div class="row">
     <span v-for="movie in actor.movies" :key="movie.id" class="border-0 card col-3">
       <router-link :to="`/movie/${movie.id}`">
-      <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title"><br>
+      <img class="movie--poster-- my-3" style="width:180px height:250px" :src="movie.post_url" :alt="movie.title"><br>
       {{ movie.title }}
       </router-link>
     </span>
@@ -46,5 +47,7 @@ export default {
 </script>
 
 <style>
-
+.actordetail {
+  margin-left: 660px
+}
 </style>

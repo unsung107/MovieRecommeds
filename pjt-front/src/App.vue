@@ -16,10 +16,9 @@
         <b-nav-form v-if="isLoggedIn">
           <router-link v-if="user_id === 1" to="/adminPage">admin |    </router-link>
           <a @click.prevent="logout" href="/logout"> |  Logout  |</a>
-          <router-link to="/createRecommend">추천리스트 작성</router-link> | 
-          <router-link :to="`/userDetail/${user_id}`">마이페이지</router-link> | 
-          <router-link :to="`/MovieForYou`">MovieForYou</router-link> | 
-
+          <router-link :to="`/createRecommend`">추천리스트 작성  | </router-link>
+          <router-link :to="`/userDetail/${user_id}`">마이페이지 | </router-link>
+          <router-link :to="`/MovieForYou`">MovieForYou  | </router-link>
         </b-nav-form>
         <b-nav-form v-else>
           <router-link to="/login" @login="checkLoggedIn">Login</router-link>    
@@ -99,4 +98,8 @@ export default {
   color: white;
 }
 
+router-link{
+  display: block;
+  color: white;
+}
 </style>

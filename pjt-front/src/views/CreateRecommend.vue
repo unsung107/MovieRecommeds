@@ -1,10 +1,10 @@
 <template>
-  <div class="container" style="width:700px">
+  <div class="container" style="width:900px">
     <div>
       <div class="title">
         <div>
           <p style="float: left">제목 :</p> 
-          <input type="text" v-model="creationFrom.title" placeholder=" 비오는 날 보기 좋은 영화" style="float:left"/>
+          <input type="text" class="col-4 row-5" v-model="creationFrom.title" placeholder=" 비오는 날 보기 좋은 영화" style="float:left"/>
         </div>
         <button class="btn btn-secondary" @click="createRecommend" style="float:right">추천리스트 만들기</button>
 
@@ -15,32 +15,31 @@
         <button class="btn btn-primary" data-toggle="modal" data-target="#find_movie">영화 추가하기</button>
         <AddMovieInRecommendModal @selectMovie="modalAddMovie" />
         <hr />
-    </div>
+      </div>
+      <!-- <div> --> 
         <div v-if="selectedMovie.id">
-          <div class="d-inline-block" style="width:50%">
+          <div class="d-inline-block" style="width:50% float: left;">
             <img :src="selectedMovie.post_url" alt class="movie--poster--idea"/><br><br>
           </div>
           <div class="d-inline-block" style="width:50%">
-            <textarea type="text" v-model="makingMovieComment" class="col-5 row-5" />
+            <textarea type="text" v-model="makingMovieComment" class="comment col-9 row-5" />
             <button class="btn btn-secondary" @click="addMovie(selectedMovie)">등록</button>
           </div>
         </div>
+      <!-- </div> -->
 
-        <div>
-    
-          
-          <div v-for="addedMovie in creationFrom.movies" :key="addedMovie.id">
-            <div class="d-inline-block" style="width:50%">
-              <img class="movie--poster-- mr-0" style="width:180px height:250px" :src="addedMovie.movie.post_url"/>
-            </div>
-            <div class="d-inline-block" style="width:50%">
-              {{addedMovie.movie.title}} <br>
-              {{addedMovie.movieComment}}
-            <br />
-            </div>
+      <div>
+        <div v-for="addedMovie in creationFrom.movies" :key="addedMovie.id">
+          <div class="d-inline-block" style="width:50% float:left ml-7 mr-5">
+            <img class="movie--poster--idea" :src="addedMovie.movie.post_url"/>
+          </div>
+          <div class="d-inline-block" style="width:50%">
+            <h3 style="float: left">{{addedMovie.movie.title}}</h3> <br><br><br>
+            <div style="float: left">{{addedMovie.movieComment}}</div>
+          <br />
           </div>
         </div>
-        <br>
+      </div><br>
     </div>
   </div>
 </template>
@@ -129,5 +128,8 @@ export default {
 .movie--poster--idea {
   width: 180px;
   height: 250px;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-bottom: 15px;
 }
 </style>

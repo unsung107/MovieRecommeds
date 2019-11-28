@@ -1,15 +1,23 @@
 <template>
   <div>
-    <h1>회원가입</h1>
-    <div>아이디를 입력하세요</div>
-    <input type="text" v-model="credentials.username" class="form-control"><br><br>
-    <div>비밀번호를 입력하세요</div>
-    <input type="password" v-model="credentials.password1" class="form-control"><br><br>
-    <div>비밀번호를 다시 한번 입력하세요</div>
-    <input type="password" v-model="credentials.password2" class="form-control"><br><br>
-    <div>생일을 입력하세요</div>
-    <input type="date" v-model="credentials.birthday" ><br><br>
-    <button @click="signup">회원가입</button><br>
+    <h2>회원가입 페이지입니다!</h2> <br>
+    
+    <h5>아이디를 입력하세요</h5>
+      <input type="text" v-model="credentials.username" class="form-control" style="width: 500px">
+      <div style="color: red">연속 4개 이상 같은 단어는 사용하지 말아주세요!</div>
+      <div style="color: red">영어 또는 영어와 숫자의 조합으로 만들어주세요!</div>
+      <br><br>
+    <h5>비밀번호를 입력하세요</h5>
+      <input type="password" v-model="credentials.password1" class="form-control" style="width: 500px">
+      <div style="color: red">연속 4개 이상 같은 단어는 사용하지 말아주세요!</div>
+      <div style="color: red">비밀번호는 8글자 이상으로 만들어주세요!</div>
+      <br><br>
+    <h5>비밀번호를 다시 한번 입력하세요</h5>
+      <input type="password" v-model="credentials.password2" class="form-control" style="width: 500px">
+      <br><br>
+    <h5>생일을 입력하세요</h5>
+      <input type="date" v-model="credentials.birthday" ><br><br>
+      <button @click="signup">회원가입</button><br>
     
     <!-- <span v-for="error in errors[0].username" :key="error">{{error}}</span>
     <span v-for="error in errors[0].password1" :key="error">{{error}}</span>
@@ -72,5 +80,7 @@
 </script>
 
 <style>
-
+.form-control {
+  margin: 0 auto;
+}
 </style>

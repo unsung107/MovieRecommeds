@@ -1,11 +1,12 @@
 <template>
   <div>
+    <h4 class="directordetail" >{{director.name}}</h4><br><br>
     <img :src="director.image_url" alt="">
-    {{director.name}}
+    <br><br> <br><br>
     <div class="row">
     <span v-for="movie in director.movies" :key="movie.id" class="border-0 card col-3">
       <router-link :to="`/movie/${movie.id}`">
-      <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title"><br>
+      <img class="movie--poster-- my-3" style="width:180px height:250px" :src="movie.post_url" :alt="movie.title"><br>
       {{ movie.title }}
       </router-link>
     </span>
@@ -43,5 +44,7 @@ export default {
 </script>
 
 <style>
-
+.directordetail {
+  margin-left: 660px
+}
 </style>

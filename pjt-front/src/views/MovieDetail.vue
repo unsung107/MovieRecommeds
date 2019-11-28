@@ -18,16 +18,9 @@
         ></i>
       </h3>
       {{ movie.discription }}
-      <button
-        type="button"
-        class="btn btn-secondary"
-        data-toggle="tooltip"
-        data-placement="bottom"
-        title="Tooltip on bottom"
-      >Tooltip on bottom</button>
     </div>
-    <div class="ml-5 d-inline-block" style="width: 250px; text-align: center">
-      <h6>평점: {{ movie.score }} 관객수: {{ movie.audience }}</h6>
+    <div class="ml-5 d-inline-block" style="width: 250px">
+      <h5 style="float:right">평점: {{ movie.score }}  관객수: {{ movie.audience }}</h5>
     </div>
     <div>
       <a
@@ -166,7 +159,8 @@
     </div>
     <hr />
     <!-- review -->
-    <div v-if="token" style="float:left;">
+    <h4>Reveiw</h4><br><br>
+    <div v-if="token" style="float:left ml-2">
       <input type="text" v-model="review.content" />
       <i
         v-for="idx in [1,2,3,4,5]"
