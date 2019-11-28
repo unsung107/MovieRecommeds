@@ -1,14 +1,20 @@
 <template>
     <div class="container">
-    <button @click="getMovie(1)">범죄</button>
-    <button @click="getMovie(2)">드라마</button>
-    <button @click="getMovie(3)">액션</button>
-    <button @click="getMovie(5)">SF</button>
-    <button @click="getMovie(11)">판타지</button>
-    <br />
+      <button type="button" class="btn btn-outline-info" @click="getMovie(1)">   범죄   </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(2)">  드라마  </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(3)">   액션   </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(5)">    SF    </button>
+      <button type="button" class="btn btn-outline-info" @click="getMovie(11)">  판타지  </button>
+    <br /><br />
 
-    <input type="text" v-model="searchKey" @input="searching(searchKey)" />
+    <!-- search bar -->
+    <form class="form-inline md-form form-sm mt-0">
+      <i class="fas fa-search" aria-hidden="true"></i>
+      <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search" v-model="searchKey" @input="searching(searchKey)">
+    </form>
 
+
+    <!--  -->
     <div class="row">
       <span class="border-0 card col-3 my-3" v-for="movie in movies" :key="movie.id">
         <router-link :to="`/movie/${movie.id}`">
@@ -111,4 +117,7 @@ export default {
 </script>
 
 <style>
+.btn-outline-info {
+  margin-right: 5px;
+}
 </style>

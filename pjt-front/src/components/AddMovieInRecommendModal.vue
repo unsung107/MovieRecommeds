@@ -1,6 +1,6 @@
 <template>
   <div
-    class="modal fade"
+    class="modal-size modal fade"
     tabindex="-1"
     role="dialog"
     aria-hidden="true"
@@ -9,28 +9,28 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">영화 검색</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
                   <input type="text" v-model="searchKey" @input="searching(searchKey)" />
-    <div class="row">
+    <div class="row container">
       <span
-        class="card col-3 my-3"
+        class="card border-0 col-4 my-3 mx-2.7"
         v-for="movie in movies"
         :key="movie.id"
         @click="selectMovie(movie)"
       >
-        <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
-        {{ movie.title }}
+        <img class="movie--poster--modal my-3" :src="movie.post_url" :alt="movie.title" />
+        <!-- {{ movie.title }} -->
       </span>
     </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" @click="addMovie" data-dismiss="modal">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-primary" @click="addMovie" data-dismiss="modal">추가</button>
         </div>
       </div>
     </div>
@@ -82,4 +82,8 @@ export default {
 </script>
 
 <style>
+.movie--poster--modal {
+  width: 120px;
+  height: 180px;
+}
 </style>

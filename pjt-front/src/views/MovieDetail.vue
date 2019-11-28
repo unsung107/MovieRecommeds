@@ -13,14 +13,19 @@
     
     <!-- movie 평점 관객수 좋아요누른사람 -->
     <div class="d-inline-block">
-      <h3>{{ movie.score }}</h3>
+      <h6>평점: {{ movie.score }}</h6>
     </div>
     <div class="d-inline-block">
+<<<<<<< HEAD
       {{ movie.audience }}
       <i @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
+=======
+      <h6>관객 수: {{ movie.audience }}</h6>
+      <i class="fas fa-heart fa-lg" style="color:red">좋아요</i>
+>>>>>>> 5c9bac5c44b361b0f326ca756e1987ead9e73328
     </div>
     <div class="d-inline-block">
-      <h3>좋아요누른사람</h3>
+      <h3>좋아요누른사람for문돌리면서 이름뽑기</h3>
     </div>
     <!-- 감독, 배우 -->
     <div class="row">
@@ -96,7 +101,7 @@
     <div>
       <span v-for="review in reviews" :key="review.id">{{review.username}} : {{review.content}}  {{review.id}}
         <button v-if="token && user_id === review.user_id" @click="deleteReview(review.id)">x</button>
-        <br>
+        <br><br><br><br>
       </span>
     </div>
   </div>
