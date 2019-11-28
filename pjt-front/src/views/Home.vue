@@ -8,7 +8,7 @@
     <br /><br />
 
     <!-- search bar -->
-    <form class="form-inline md-form form-sm mt-0 text-center">
+    <form class="form-inline md-form form-sm mt-0">
       <i class="fas fa-search" aria-hidden="true"></i>
       <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search" v-model="searchKey" @input="searching(searchKey)">
     </form>
@@ -20,8 +20,7 @@
         <router-link :to="`/movie/${movie.id}`">
           <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
         </router-link>
-        {{ movie.title }}
-        <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users && movie.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"></i>
+        {{ movie.title }} <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users && movie.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"></i>
       </span>
     </div>
   </div>
@@ -118,9 +117,14 @@ export default {
 </script>
 
 <style>
+
 .btn-outline-info {
   margin-right: 5px;
   position: relative;
 	width: 10%;
+}
+container {
+  position: relative;
+  margin: 0 auto;
 }
 </style>

@@ -495,7 +495,6 @@ def giveMovieInfo(request, movie_id):
         liked_user = get_object_or_404(User, pk=liked_user)
         serializer = UserSerializer(instance=liked_user)
         result['liked_users_info'].append(serializer.data)
-    pprint(result['liked_users_info'][0])
     return JsonResponse(result)
 
 def giveActorInfo(request, actor_id):
