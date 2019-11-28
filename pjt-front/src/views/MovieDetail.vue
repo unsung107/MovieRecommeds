@@ -9,6 +9,9 @@
       <!-- {{ movie }} -->
       <h3>{{ movie.title }} <i v-if="token" @click="goodMovie(movie.id, movie)" :class="(movie.liked_users && movie.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"></i></h3>
       {{ movie.discription }}
+      <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
+        Tooltip on bottom
+      </button>
     </div>
     <div class="ml-5 d-inline-block" style="width: 250px; text-align: center">
       <h6>평점: {{ movie.score }} 관객수: {{ movie.audience }}</h6>
@@ -27,7 +30,7 @@
 
 
     <!-- 감독, 배우 -->
-    <h2>감독</h2>
+    <h4>감독</h4>
     <div class="row">
       <span v-for="director in movie.directors" :key="director.id">
         <router-link :to="`/director/${director.id}`">
@@ -46,7 +49,7 @@
       </span>
       </div>
       <hr>
-      <h2>배우</h2>
+      <h4>배우</h4>
       <div class="row">
       <span v-for="actor in movie.actors" :key="actor.id">
         <router-link :to="`/actor/${actor.id}`">
@@ -227,4 +230,7 @@ export default {
 <style>
 .test { height: 300px !important; overflow: hidden; }
 /* .test div, .test ol, .test img{ height: 300px !important;  } */
+h4 {
+  float: left;
+}
 </style>
