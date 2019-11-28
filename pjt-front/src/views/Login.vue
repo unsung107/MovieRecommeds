@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>로그인 페이지 입니다.</h1>
+    <h2>로그인 페이지 입니다.</h2>
     <LoginForm />
     
   </div>

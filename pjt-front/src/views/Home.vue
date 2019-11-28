@@ -16,7 +16,6 @@
       </div>
     </form>
 
-
     <!--  -->
     <div class="row">
       <span class="border-0 card col-3 my-3" v-for="movie in movies" :key="movie.id">
@@ -123,7 +122,7 @@ export default {
 .btn-outline-info {
   margin-right: 5px;
   position: relative;
-	width: 10%;
+	width: 11%;
 }
 container {
   position: relative;
@@ -132,7 +131,6 @@ container {
 
 .search-box { text-align: center; }
 .fas {padding: 5px; }
-.searchWrap { width: 530px; margin: 0 auto; }
-
+.searchWrap { width: 970px; margin: 0 auto; }
 
 </style>

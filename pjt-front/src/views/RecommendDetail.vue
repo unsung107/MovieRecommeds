@@ -1,42 +1,52 @@
 <template>
+<div class="container">
   <div>
-    <button v-if="token && recommend.user === user_id" @click="deleteRecommend">x</button>
-    {{recommend.title}}
-    {{recommend.discription}}
-    {{recommend.user}}
+    <h3>[ {{recommend.title}} ]  
     <i
       v-if="token"
       @click="goodRecommend(recommend.id, recommend)"
       :class="(recommend.liked_users && recommend.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"
-    ></i>
+    ></i></h3><br>
+    <h6>{{recommend.discription}}</h6>
+    <button v-if="token && recommend.user === user_id" @click="deleteRecommend" class="list_app btn btn-secondary">리스트 삭제</button>
+    
+    
+    
     <br />
     <span>
       <movieInRecommend :movie="recommend.movies[0]" :moviecomment="recommend.moviecomments[0]" />
     </span>
-    <hr />
-    <div v-if="recommend.movies.length > 1">
-      <span v-for="idx in recommend.movies.length - 1" :key="`movieinrecommend-${idx}`">
-        <movieInRecommend
-          :movie="recommend.movies[idx]"
-          :moviecomment="recommend.moviecomments[idx]"
-        />
-        <hr />
-      </span>
-    </div>
-    <div v-if="token">
-      <input type="text" v-model="review.content" />
-      <button @click="createReview">작성</button>
-    </div>
-    <div>
-      <span v-for="review in recommend_reviews" :key="review.id">
-        <router-link :to="`/UserDetail/${review.user}`">{{review.username}}</router-link>
-        : {{review.content}} {{review.id}}
-        <button
-          v-if="token && user_id === review.user_id"
-          @click="deleteReview(review.id)"
-        >x</button>
-        <br />
-      </span>
+    <hr >
+    <div class="review-div">
+      
+      <div v-if="recommend.movies.length > 1">
+        <span v-for="idx in recommend.movies.length - 1" :key="`movieinrecommend-${idx}`">
+          <movieInRecommend
+            :movie="recommend.movies[idx]"
+            :moviecomment="recommend.moviecomments[idx]"
+          />
+          <hr />
+        </span>
+      </div>
+      <h5 class="review">Review</h5>
+      <div v-if="token">
+        <input type="text" v-model="review.content" />
+        <button class="btn btn-secondary" style="ml-2" @click="createReview">작성</button><br><br>
+      </div>
+      <div>
+      
+        <span v-for="review in recommend_reviews" :key="review.id">
+          <router-link :to="`/UserDetail/${review.user}`">{{review.username}}</router-link>
+          : {{review.content}}
+          <button
+            v-if="token && user_id === review.user_id"
+            @click="deleteReview(review.id)"
+            class="btn--review btn-secondary"
+          > review 삭제</button>
+          <br />
+        </span>
+      </div>
+      </div>
     </div>
   </div>
 </template>
@@ -155,4 +165,20 @@ export default {
 </script>
 
 <style>
+.list_app {
+  position: relative;
+  left: 350px;
+  top: 10px
+}
+.review {
+  position: relative;
+  right: 300px;
+  top: 10px
+}
+.review-div {
+  margin-left: 200px;
+}
+.btn--review {
+  height: 30px;
+}
 </style>

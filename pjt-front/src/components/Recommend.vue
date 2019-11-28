@@ -1,9 +1,9 @@
 <template>
 <a data-toggle="collapse" :href="`#recommend-${recommend.id}`" role="button" aria-expanded="false" aria-controls="collapseExample">
-  <div>
+  <div> <br>
     <router-link :to="`/RecommendDetail/${recommend.id}`">
-    {{ recommend.title }}
-    </router-link>
+    <h5 style="">[ {{ recommend.title }} ]</h5>
+    </router-link><br>
     {{ recommend.discription }}
     
     <hr>

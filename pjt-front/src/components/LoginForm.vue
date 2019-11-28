@@ -6,22 +6,23 @@
     </div>
 
     <div class="login-form">
-
       <div v-if="errors.length">
         <h4>다음의 오류를 해결해주세요!</h4>
         <hr>
         <div v-for="(error, idx) in errors" v-bind:key="idx">{{ error }}</div>
+        {{ error }}
       </div>
-
-      <div class="form-group">
+      
+      <div class="form-group ">
         <label for="id">ID </label>
         <input type="text" class="form-control" id="id" placeholder="아이디를 입력해주세요" v-model="credentials.username">
-      </div>
+      </div><br>
+
 
       <div class="form-group">
         <label for="password">password</label>
         <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력해주세요" v-model="credentials.password">
-      </div>
+      </div><br>
 
       <div>
         <button @click="login">Login</button>
@@ -86,5 +87,8 @@ export default {
 </script>
 
 <style>
-
+.form-group {
+  width: 500px;
+  margin: 0 auto;
+}
 </style>
