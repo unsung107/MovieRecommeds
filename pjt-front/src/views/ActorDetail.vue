@@ -48,6 +48,6 @@ export default {
 
 <style>
 .actordetail {
-  margin-left: 660px
+  margin-left: 880px
 }
 </style>
