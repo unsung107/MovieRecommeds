@@ -21,10 +21,9 @@
           <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
         </router-link>
         {{ movie.title }}
-        <button v-if="token" @click="goodMovie(movie.id)">좋아요</button>
+        <i @click="goodMovie(movie.id, movie)" :class="(movie.liked_users.indexOf(user_id) !== -1) ?'far fa-heart' : 'fas fa-heart'"></i>
       </span>
     </div>
-
   </div>
 </template>
 
@@ -57,7 +56,7 @@ export default {
           console.error(error);
         });
     },
-
+    
     searching(movie_nm) {
       if (!movie_nm) {
         movie_nm = " ";
@@ -72,7 +71,7 @@ export default {
           console.error(error);
         });
     },
-    goodMovie(movie_id) {
+    goodMovie(movie_id, movie) {
       const SERVER_IP = process.env.VUE_APP_SERVER_IP;
       this.$session.start();
       const options = {
@@ -89,13 +88,17 @@ export default {
         )
         .then(response => {
           console.log(response);
+          if (response.data.liked) {
+            movie.liked_users.push(this.user_id)
+          } else{
+            movie.liked_users = movie.liked_users.filter(user => user !== this.user_id)
+          }
         })
         .catch(error => {
           console.log(error);
         });
     }
   },
-  mounted() {},
   computed: {
     token() {
       return this.$session.get('jwt')
@@ -106,6 +109,9 @@ export default {
     user_id() {
       return jwtDecode(this.token).user_id;
     }
+  },
+  updated() {
+
   },
 };
 </script>
