@@ -1,7 +1,7 @@
 <template>
   <div class="collapse" :id="`recommend-${recommend.id}`">
     <span v-for="movie in recommend.movies" :key="movie.id">
-      <img class="movie--poster my-3" :src="movie.post_url" alt="">     
+      <img class="movie--poster--re my-3" :src="movie.post_url" alt="">     
     </span>
   </div>
 </template>
@@ -21,5 +21,10 @@ export default {
 </script>
 
 <style>
-
+.movie--poster--re {
+  width: 120px;
+  height: 175px;
+  margin-right: 10px;
+  position: relative;
+}
 </style>

@@ -3,9 +3,9 @@
 
     내가 좋아하는 배우가 나오는 영화
     <div class="row">
-      <span class="border-0 card col-3 my-3" v-for="movie in movies.actors" :key="`actor-${movie.id}`">
+      <span class="border-0 card col-3 my-3 mx-1" v-for="movie in movies.actors" :key="`actor-${movie.id}`">
         <router-link :to="`/movie/${movie.id}`">
-          <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
+          <img class="movie--poster-- my-3" :src="movie.post_url" :alt="movie.title" />
         </router-link>
         {{ movie.title }}
       </span>
@@ -15,7 +15,7 @@
 
     내가 좋아하는 배우가 나오는 영화
     <div class="row">
-      <span class="border-0 card col-3 my-3" v-for="movie in movies.directors" :key="`director-${movie.id}`">
+      <span class="border-0 card col-3 my-1" v-for="movie in movies.directors" :key="`director-${movie.id}`">
         <router-link :to="`/movie/${movie.id}`">
           <img class="movie--poster my-3" :src="movie.post_url" :alt="movie.title" />
         </router-link>
@@ -73,5 +73,8 @@ export default {
 </script>
 
 <style>
-
+.movie--poster-- {
+  width: 120px;
+  height: 175px;
+}
 </style>
