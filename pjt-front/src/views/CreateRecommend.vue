@@ -4,7 +4,7 @@
       title : 
       <input type="text" v-model="creationFrom.title" placeholder=" 비오는 날 보기 좋은 영화"/>
       <br /><br />
-      discription :
+      <p class="d_class">discription :</p>
       <textarea type="text" class="col-7 row-5"  v-model="creationFrom.discription" row="4" placeholder="비오는날 보기 좋은 영화 목록입니다~" style=""/>
       <br /><br />
       <button class="btn btn-primary" data-toggle="modal" data-target="#find_movie">영화 추가하기</button>
@@ -114,4 +114,5 @@ export default {
 </script>
 
 <style>
+.d_class { float: left; }
 </style>
