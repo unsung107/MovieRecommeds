@@ -13,7 +13,7 @@
 
     <hr>
 
-    내가 좋아하는 배우가 나오는 영화
+    내가 좋아하는 감독이 나오는 영화
     <div class="row">
       <span class="border-0 card col-3 my-1" v-for="movie in movies.directors" :key="`director-${movie.id}`">
         <router-link :to="`/movie/${movie.id}`">

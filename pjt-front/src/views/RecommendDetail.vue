@@ -7,7 +7,7 @@
       @click="goodRecommend(recommend.id, recommend)"
       :class="(recommend.liked_users && recommend.liked_users.indexOf(user_id) !== -1) ?'fas fa-heart' : 'far fa-heart'"
     ></i></h3><br>
-    <h6>{{recommend.discription}}</h6>
+    <div>>{{recommend.discription}}</div>
     <button v-if="token && recommend.user === user_id" @click="deleteRecommend" class="list_app btn btn-secondary">리스트 삭제</button>
     
     
@@ -175,9 +175,9 @@ export default {
   right: 300px;
   top: 10px
 }
-.review-div {
+/* .review-div {
   margin-left: 200px;
-}
+} */
 .btn--review {
   height: 30px;
 }
