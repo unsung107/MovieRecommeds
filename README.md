@@ -75,11 +75,20 @@ $ npm install jwt-decode
 
 ### 4. 핵심기능
 
+- 장르 별로 영화 보여주기
 
+- Movie Detail 보여주기(title, discription, director, actor, vedio, snapshot, reveiw)
+
+- 감독 및 배우가 나온 영화 보여주기
+
+- 영화, 감독, 배우에 대한 좋아요를 통해 나와 같은 영화를 좋아요 한 사람의 영화들도 보여주기
+
+- 추천 리스트 작성 및 보여주기
+
+- Movie For You : 내가 좋아하는 배우 / 감독 나오는 영화, 내가 좋아한 영화를 좋아하는 유저들이 좋아하는 영화
+
+  
 
 ### 5. 배포 서버URL
 
-
-
-### 6. 기타(느낀점)
-
+https://geeg-3b5d2.firebaseapp.com](https://geeg-3b5d2.firebaseapp.com/
