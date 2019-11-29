@@ -238,7 +238,7 @@ def movieupdate(request):
     }
     NAVER_BASE_URL = config('NAVER_BASE_URL')
 
-    for week_ago in range(5,50):
+    for week_ago in range(1,10):
         print(week_ago)
         targetDt = datetime.date.today() - datetime.timedelta(weeks=week_ago)
         targetDt = targetDt.strftime('%Y%m%d')
@@ -465,10 +465,14 @@ def homemovielist(request, genre_id):
         result = serializer.data
     else:
         result = {'movies': []}
-        for idx in range(1, 29):
-            movie = get_object_or_404(Movie, pk=idx)
+        movies = Movie.objects.all()
+        cnt = 0
+        for movie in movies:
+            cnt += 1
             serializer = MovieSerializer(instance=movie)
             result['movies'].append(serializer.data)
+            if cnt > 31:
+                break
 
     
     return JsonResponse(result)
@@ -747,8 +751,8 @@ def updateMovie(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     print(request.POST)
     if request.method == 'POST':
-        serializer = MovieSerializer(request.POST, instance=movie)
-        if serializer.is_valid():
+        serializer = MovieSerializer(data=request.POST, instance=movie)
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(status=200)
     serializer = MovieSerializer(instance=movie)

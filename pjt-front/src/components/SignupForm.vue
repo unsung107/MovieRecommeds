@@ -50,7 +50,7 @@
         const password1 = this.credentials.password1
         const password2 = this.credentials.password2
         const birthday = this.credentials.birthday
-
+        const SERVER_IP = process.env.VUE_APP_SERVER_IP
         let born = birthday.split('-')[0]
 
         let currentDateWithFormat = new Date().toJSON().slice(0,10).replace(/-/g,'/').slice(0, 4)
@@ -60,7 +60,7 @@
           return false
         }
 
-        axios.post('http://127.0.0.1:8000/accounts/signup/', { 'username':username, 'birthday':birthday, 'age':age, 'password1':password1,'password2':password2 })
+        axios.post(SERVER_IP + '/accounts/signup/', { 'username':username, 'birthday':birthday, 'age':age, 'password1':password1,'password2':password2 })
           .then(res => {
 
             

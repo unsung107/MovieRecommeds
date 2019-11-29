@@ -65,6 +65,7 @@ ROOT_URLCONF = 'lastproject.urls'
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8080",
     "http://localhost:8081",
+    "https://geeg-3b5d2.web.app",
 ]
 
 REST_FRAMEWORK = {
