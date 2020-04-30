@@ -16,7 +16,7 @@
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.3.2",
     "date": "^1.0.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "mdbvue": "^6.1.0",
     "vue": "^2.6.10",
